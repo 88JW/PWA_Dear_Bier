@@ -6,6 +6,10 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      server: {
+        hmr: true, // Upewnij się, że to jest włączone
+        port: 3000, // lub inny port, który używasz
+      },
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {

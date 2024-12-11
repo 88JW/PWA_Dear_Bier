@@ -7,7 +7,7 @@ function App() {
     <>
       <p>
         Aplikacja przeznaczona do ułatwienia warzenia piwa
-        <p>10.49</p>
+        <p>14.47</p>
       </p>
     </>
   )
