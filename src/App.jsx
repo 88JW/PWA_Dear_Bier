@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 're
 import Kalkulator from './Kalkulator';
 import Przepisy from './Przepisy';
 import Dziennik from './Dziennik';
-import Temperatury from './Kalkulator';
+import Temperatury from './Temperatury';
 import NowaWarka from './NowaWarka';
 import SzczegolyWarki from './SzczegolyWarki';
 
@@ -13,15 +13,15 @@ function Home() {
 
   return (
     <div className="tile-container">
-      <Link to="/kalkulator" onClick={() => navigate('/kalkulator')}>
+      <Link to="/dziennik" onClick={() => navigate('/dziennik')}>
+        <div className="tile">Dziennik warzenia</div>
+      </Link><Link to="/kalkulator" onClick={() => navigate('/kalkulator')}>
         <div className="tile">Kalkulator refermentacji</div>
       </Link>
       <Link to="/przepisy" onClick={() => navigate('/przepisy')}>
         <div className="tile">Przepisy</div>
       </Link>
-      <Link to="/dziennik" onClick={() => navigate('/dziennik')}>
-        <div className="tile">Dziennik warzenia</div>
-      </Link>
+      
       <Link to="/temperatury" onClick={() => navigate('/dziennik')}>
         <div className="tile">Kalkulator Temperatur</div>
       </Link>

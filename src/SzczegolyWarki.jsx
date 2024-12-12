@@ -1,6 +1,6 @@
 // SzczegolyWarki.jsx
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +11,15 @@ function SzczegolyWarki() {
   const [pomiary, setPomiary] = useState([]);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const [defaultDate, setDefaultDate] = useState(new Date().toISOString().slice(0, 10)); // Stan dla daty
+  const [defaultTime, setDefaultTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })); // Stan dla godziny
+
+  useEffect(() => {
+    // Ustawienie domyślnych wartości dla daty i godziny
+    setDefaultDate(new Date().toISOString().slice(0, 10));
+    setDefaultTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+  }, []); // useEffect uruchomi się tylko raz po zamontowaniu komponentu
+
 
   useEffect(() => {
     if (warka && warka.pomiary && warka.pomiary.length > 0 && pomiary.length === 0) {
@@ -82,24 +91,45 @@ function SzczegolyWarki() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="data">Data:</label>
-          <input type="date" id="data" {...register("data", { required: true })} />
+          <input type="date" id="data" {...register("data", { required: true })} defaultValue={defaultDate} />
+          {/* Dodano defaultValue={defaultDate} */}
         </div>
         <div>
           <label htmlFor="godzina">Godzina:</label>
-          <input type="time" id="godzina" {...register("godzina", { required: true })} />
+          <input type="time" id="godzina" {...register("godzina", { required: true })} defaultValue={defaultTime} />
+          {/* Dodano defaultValue={defaultTime} */}
         </div>
         <div>
           <label htmlFor="blg">Blg:</label>
-          <input type="number" id="blg" {...register("blg", { required: true })} />
+          <input type="number" id="blg" {...register("blg")} />
+          {/* Blg jest teraz opcjonalne (usunięto { required: true }) */}
         </div>
         <div>
           <label htmlFor="temperatura">Temperatura:</label>
-          <input type="number" id="temperatura" {...register("temperatura", { required: true })} />
+          <input type="number" id="temperatura" {...register("temperatura")} />
+          {/* Temperatura jest teraz opcjonalna */}
         </div>
-        {/* ... pozostałe pola formularza ... */}
+        <div>
+          <label htmlFor="piana">Piana:</label>
+          <input type="checkbox" id="piana" {...register("piana")} />
+          {/* Piana jest teraz opcjonalna */}
+        </div>
+        <div>
+          <label htmlFor="co2">CO<sup>2</sup>:</label>
+          <input type="checkbox" id="co2" {...register("co2")} />
+          {/* CO2 jest teraz opcjonalne */}
+        </div>
+        <div>
+          <label htmlFor="notes">Notatki:</label>
+          <textarea id="notes" {...register("notes")} />
+          {/* Notatki są teraz opcjonalne */}
+        </div>
+
+        {/* ... (reszta formularza) ... */}
         <button type="submit">Dodaj pomiar</button>
       </form>
       <button onClick={usunWarke}>Usuń warkę</button> {/* Dodany przycisk "Usuń warkę" */}
+      <button onClick={() => navigate('/')}>Wstecz</button>
     </div>
   );
 }
