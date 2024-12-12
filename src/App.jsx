@@ -12,7 +12,7 @@ import ArchiwumWarki from './ArchiwumWarki';
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.0.0')
+  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.0.1')
   
   return (
     

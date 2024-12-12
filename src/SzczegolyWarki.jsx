@@ -3,19 +3,25 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { FormControlLabel, Checkbox } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import dayjs from 'dayjs';
 import Grid from '@mui/material/Grid';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-// dodać ukryte menu do usuwania i archiwizacji warki 
+
+// import * as Imports from './imports';
 
 
 function SzczegolyWarki() {
@@ -25,6 +31,8 @@ function SzczegolyWarki() {
   const [pomiary, setPomiary] = useState([]);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   const [defaultDate, setDefaultDate] = useState(new Date().toISOString().slice(0, 10)); // Stan dla daty
   const [defaultTime, setDefaultTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })); // Stan dla godziny
 
@@ -56,7 +64,7 @@ function SzczegolyWarki() {
     reset(); // Reset formularza po dodaniu pomiaru
   };
 
-  const usunWarke = () => {
+  const handleUsun = () => {
     if (window.confirm('Czy na pewno chcesz usunąć tę warkę?')) {
       // Pobierz listę warek z localStorage
       const warkiData = localStorage.getItem('warki');
@@ -72,7 +80,9 @@ function SzczegolyWarki() {
       // Przekieruj do strony dziennika
       navigate('/dziennik');
     }
+    handleClose();
   };
+
   const [defaultDateTime, setDefaultDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -88,21 +98,64 @@ function SzczegolyWarki() {
     const zaktualizowanaWarka = { ...warka, pomiary: nowePomiary };
     localStorage.setItem(`warka-${id}`, JSON.stringify(zaktualizowanaWarka));
   };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+
+  }; const handleClose = () => {
+    setAnchorEl(null);
+
+  }; const handleArchiwizuj = () => {
+    navigate(`/archiwum/${id}`, { state: { warka, pomiary } });
+    handleClose();
+  };
 
   if (!warka) {
     return <div>Warka nie znaleziona.</div>;
   }
-  const handleArchiwizuj = () => {
-    navigate(`/archiwum/${id}`, { state: { warka, pomiary } }); 
-  };
+
 
   return (
     <div className="app-container">
-     <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h1>Szczegóły warki: {warka.nazwa}</h1>
-        <Button variant="contained" color="primary" onClick={handleArchiwizuj}>
-         Archiwizuj warkę
-       </Button>
+      <div style={{ display: 'flex', alignItems: 'center' }}> 
+      <h1>Szczegóły warki: {warka.nazwa}</h1>
+        <div>
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? 'long-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            {/* Zamiast MoreVertIcon użyj SettingsIcon */}
+            <SettingsIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              'aria-labelledby': 'long-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+
+              style: {
+                maxHeight: 48 * 4.5,
+                width: '20ch',
+              },
+            }}
+          >
+            <MenuItem onClick={handleArchiwizuj}>
+              Archiwizuj warkę
+            </MenuItem>
+            <MenuItem onClick={handleUsun}>
+              Usuń warkę
+            </MenuItem>
+          </Menu>
+        </div>
+       
+
       </div>
       <Typography variant="body2" color="text.secondary">
         Dzień nastawienia: {warka.data}
@@ -236,12 +289,13 @@ function SzczegolyWarki() {
         ))}
       </ul>
 
-     
+
       <p></p>
       <div className="button-container">
         <div sx={{ marginTop: 2 }}>
-          <button onClick={usunWarke}>Usuń warkę</button> {/* Dodany przycisk "Usuń warkę" */}
-          <button onClick={() => navigate('/')}>Wstecz</button>
+        <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
+  Wstecz
+</Button>
         </div></div>
     </div>
   );

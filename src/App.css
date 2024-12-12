@@ -108,11 +108,3 @@ ul {
   /* Usuń domyślne znaczniki listy */
 }
 
-.buttons-container {
-  display: flex;
-
-  .card-content {
-    /* ... inne style ... */
-    border-bottom: 1px solid #ccc;
-    /* Linia oddzielająca na dole */
-  }
