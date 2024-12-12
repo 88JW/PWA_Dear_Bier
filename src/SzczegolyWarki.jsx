@@ -186,7 +186,7 @@ function SzczegolyWarki() {
         {/* Blg */}
         <TextField
           label="Blg"
-          type="number"
+          type="text"
           {...register("blg")}
           fullWidth
           sx={{ marginBottom: 2 }}
@@ -195,7 +195,7 @@ function SzczegolyWarki() {
         {/* Temperatura */}
         <TextField
           label="Temperatura"
-          type="number"
+          type="text"
           {...register("temperatura")}
           fullWidth
           sx={{ marginBottom: 2 }}

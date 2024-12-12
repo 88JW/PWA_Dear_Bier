@@ -55,6 +55,28 @@ function NowaWarka() {
           <input type="date" id="data" {...register("data", { required: true })} />
           {errors.data && <span>To pole jest wymagane</span>}
         </div>
+        <div>
+          <label htmlFor="data">Rodzaj kitu:</label>
+          <input type="text" id="rodzajKitu" {...register("rodzajKitu", { required: true })} />
+          {errors.rodzajKitu && <span>To pole jest wymagane</span>}
+        </div>
+        <div>
+          <label htmlFor="data">drozdze:</label>
+          <input type="text" id="drozdze" {...register("drozdze", { required: true })} />
+          {errors.drozdze && <span>To pole jest wymagane</span>}
+        </div>
+        <div>
+          <label htmlFor="data">chmiel:</label>
+          <input type="text" id="chmiel" {...register("chmiel", { required: true })} />
+          {errors.chmiel && <span>To pole jest wymagane</span>}
+        </div>
+        <div>
+          <label htmlFor="data">rodzajCukru:</label>
+          <input type="text" id="rodzajCukru" {...register("rodzajCukru", { required: true })} />
+          {errors.rodzajCukru && <span>To pole jest wymagane</span>}
+        </div>
+
+
         {/* ... pozostałe pola formularza ... */}
         <button type="submit">Zapisz i dodaj pomiary</button>
       </form>
