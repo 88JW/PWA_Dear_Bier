@@ -215,8 +215,12 @@ function SzczegolyWarki() {
           Dodaj pomiar
         </Button>
       </form>
+      <p></p>
+      <div className="button-container">
+      <div sx={{ marginTop: 2 }}>
       <button onClick={usunWarke}>Usuń warkę</button> {/* Dodany przycisk "Usuń warkę" */}
       <button onClick={() => navigate('/')}>Wstecz</button>
+      </div></div>
     </div>
   );
 }
