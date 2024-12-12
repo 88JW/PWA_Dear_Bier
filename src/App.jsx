@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react'; 
 import Kalkulator from './Kalkulator';
 import Przepisy from './Przepisy';
 import Dziennik from './Dziennik';
@@ -10,8 +11,13 @@ import SzczegolyWarki from './SzczegolyWarki';
 
 function Home() {
   const navigate = useNavigate();
-
+  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.0.0')
   return (
+    
+     <div className="app-container">
+    <div className="app-header"> {/* Dodaj diva z nazwą aplikacji */}
+        <h1>Dear Bier App</h1> 
+      </div>
     <div className="tile-container">
       <Link to="/dziennik" onClick={() => navigate('/dziennik')}>
         <div className="tile">Dziennik warzenia</div>
@@ -26,6 +32,10 @@ function Home() {
         <div className="tile">Kalkulator Temperatur</div>
       </Link>
       
+    </div>
+    <div className="app-footer">
+        <p>Wersja: {wersjaAplikacji}</p>
+      </div>
     </div>
   );
 }

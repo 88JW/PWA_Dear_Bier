@@ -12,7 +12,7 @@ function Dziennik() {
     }
   }, []);
   return (
-    <div>
+    <div className="app-container"> 
       <h1>Dziennik warzenia</h1>
       <h2>Warki:</h2>
       <ul>
@@ -22,11 +22,12 @@ function Dziennik() {
         </li>
       ))}
     </ul>
+    <div className="button-container"> {/* Dodaj klasę tutaj */}
       <Link to="/dziennik/nowa-warka">
         <button>Stwórz nową warkę</button>
       </Link>
- 
       <button onClick={() => navigate('/')}>Wstecz</button>
+    </div>
     </div>
   );
 }

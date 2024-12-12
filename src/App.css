@@ -21,3 +21,73 @@
 .tile:hover {
   background-color: #e0e0e0;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column; /* Ustawienie kierunku na kolumnę */
+  justify-content: space-between; /* Rozciągnięcie zawartości na całą wysokość */
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5dc;
+  color: #333; 
+}
+
+.app-container {
+  width: 375px; /* Szerokość aplikacji mobilnej */
+  max-width: 100%; /* Maksymalna szerokość, aby dopasować się do mniejszych ekranów */
+  background-color: #fff; /* Opcjonalnie: kolor tła aplikacji */
+  border-radius: 10px; /* Opcjonalnie: zaokrąglone rogi */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Opcjonalnie: cień */
+  padding: 20px; /* Opcjonalnie: wewnętrzne marginesy */
+}
+.app-header {
+  color: #8b4513;
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie w poziomie */
+  align-items: center; /* Wyśrodkowanie w pionie */
+  /* ... inne style ... */
+}
+
+.app-footer {
+  text-align: center; /* Wyśrodkowanie tekstu w stopce */
+  /* ... inne style ... */
+}
+
+.MuiButton-root { /* Przykład dla przycisków Material UI */
+  background-color: #ffa500; /* bursztynowy */
+  color: #fff;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Ustawienie przycisków jeden pod drugim */
+  align-items: center; /* Wyśrodkowanie przycisków w poziomie */
+  justify-content: center; /* Opcjonalnie: wyśrodkowanie w pionie, jeśli chcesz */
+  /* ... inne style ... */
+}
+
+.button-container button {
+  margin-bottom: 10px; /* Dodaj margines między przyciskami */
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between; /* Rozciągnięcie elementów na całą szerokość i umieszczenie przycisku po prawej stronie */
+  align-items: center; /* Opcjonalnie: wyrównanie elementów w pionie */
+}
+
+ul {
+  padding: 0; /* Usuń domyślny padding */
+  margin: 0; /* Usuń domyślny margines */
+  list-style: none; /* Usuń domyślne znaczniki listy */
+}
+
+.buttons-container {
+  display: flex;
+
+  .card-content {
+    /* ... inne style ... */
+    border-bottom: 1px solid #ccc; /* Linia oddzielająca na dole */
+  }

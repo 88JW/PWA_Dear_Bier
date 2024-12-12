@@ -3,6 +3,19 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { FormControlLabel, Checkbox } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import dayjs from 'dayjs';
+import Grid from '@mui/material/Grid';
+
+
 
 function SzczegolyWarki() {
   const { id } = useParams();
@@ -28,7 +41,11 @@ function SzczegolyWarki() {
   }, [warka, pomiary]);
 
   const onSubmit = (data) => {
-    const nowyPomiar = { ...data };
+    const nowyPomiar = {
+      ...data,
+      data: dayjs(data.data).format('YYYY-MM-DD'), // Formatowanie daty
+      godzina: dayjs(data.data).format('HH:mm'), // Formatowanie godziny
+    };;
     setPomiary([...pomiary, nowyPomiar]);
 
     // Aktualizacja danych w localStorage
@@ -55,6 +72,11 @@ function SzczegolyWarki() {
       navigate('/dziennik');
     }
   };
+  const [defaultDateTime, setDefaultDateTime] = useState(new Date());
+
+  useEffect(() => {
+    setDefaultDateTime(new Date());
+  }, []);
 
   const usunPomiar = (index) => {
     const nowePomiary = [...pomiary];
@@ -71,62 +93,127 @@ function SzczegolyWarki() {
   }
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Szczegóły warki: {warka.nazwa}</h1>
       <p>Dzień nastawienia: {warka.data}</p>
       {/* ... wyświetlanie pozostałych danych warki ... */}
 
       <h2>Pomiary:</h2>
       <ul>
-        {pomiary.map((pomiar, index) => (
-          <li key={index}>
-            Data: {pomiar.data}, Godzina: {pomiar.godzina}, Blg: {pomiar.blg}, Temperatura: {pomiar.temperatura}
-            {/* ... pozostałe dane pomiaru ... */}
-            <button onClick={() => usunPomiar(index)}>X</button> {/* Dodany przycisk "X" */}
-          </li>
-        ))}
-      </ul>
+                {pomiary.map((pomiar, index) => (
+                    <Card key={index} sx={{ marginBottom: 2 }}>
+                    <CardContent className="card-content">
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <Typography variant="body2" color="text.secondary">
+                            Data: {pomiar.data}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body2" color="text.secondary">
+                            Godzina: {pomiar.godzina}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body2" color="text.secondary">
+                            Blg: {pomiar.blg}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body2" color="text.secondary">
+                            Temperatura: {pomiar.temperatura}
+                          </Typography>
+                        </Grid>
+                        
+                        <Grid item xs={6}>
+                          <Typography variant="body2" color="text.secondary">
+                            Piana: {pomiar.piana ? 'Tak' : 'Nie'}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body2" color="text.secondary">
+                            CO2: {pomiar.co2 ? 'Tak' : 'Nie'}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography variant="body2" color="text.secondary">
+                            Notatki: {pomiar.notes}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => usunPomiar(index)}
+                        sx={{ marginTop: 1 }}
+                      >
+                        Usuń
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+            </ul>
 
       <h3>Dodaj pomiar:</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="data">Data:</label>
-          <input type="date" id="data" {...register("data", { required: true })} defaultValue={defaultDate} />
-          {/* Dodano defaultValue={defaultDate} */}
-        </div>
-        <div>
-          <label htmlFor="godzina">Godzina:</label>
-          <input type="time" id="godzina" {...register("godzina", { required: true })} defaultValue={defaultTime} />
-          {/* Dodano defaultValue={defaultTime} */}
-        </div>
-        <div>
-          <label htmlFor="blg">Blg:</label>
-          <input type="number" id="blg" {...register("blg")} />
-          {/* Blg jest teraz opcjonalne (usunięto { required: true }) */}
-        </div>
-        <div>
-          <label htmlFor="temperatura">Temperatura:</label>
-          <input type="number" id="temperatura" {...register("temperatura")} />
-          {/* Temperatura jest teraz opcjonalna */}
-        </div>
-        <div>
-          <label htmlFor="piana">Piana:</label>
-          <input type="checkbox" id="piana" {...register("piana")} />
-          {/* Piana jest teraz opcjonalna */}
-        </div>
-        <div>
-          <label htmlFor="co2">CO<sup>2</sup>:</label>
-          <input type="checkbox" id="co2" {...register("co2")} />
-          {/* CO2 jest teraz opcjonalne */}
-        </div>
-        <div>
-          <label htmlFor="notes">Notatki:</label>
-          <textarea id="notes" {...register("notes")} />
-          {/* Notatki są teraz opcjonalne */}
-        </div>
+        {/* Data i godzina */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <MobileDateTimePicker
+            // ... props dla wersji desktopowej ...
+            sx={{ marginBottom: 2 }}
+            defaultValue={dayjs(new Date())}
+            ampm={false}
+            disabled={false}
+            renderInput={(params) => <TextField {...params} />} // Renderuje TextField dla wersji desktopowej
+          />
 
-        {/* ... (reszta formularza) ... */}
-        <button type="submit">Dodaj pomiar</button>
+        </LocalizationProvider>
+
+        {/* Blg */}
+        <TextField
+          label="Blg"
+          type="number"
+          {...register("blg")}
+          fullWidth
+          sx={{ marginBottom: 2 }}
+        />
+
+        {/* Temperatura */}
+        <TextField
+          label="Temperatura"
+          type="number"
+          {...register("temperatura")}
+          fullWidth
+          sx={{ marginBottom: 2 }}
+        />
+
+        {/* Piana */}
+        <FormControlLabel
+          control={<Checkbox {...register("piana")} />}
+          label="Piana"
+        />
+
+        {/* CO2 */}
+        <FormControlLabel
+          control={<Checkbox {...register("co2")} />}
+          label="CO2"
+        />
+
+        {/* Notatki */}
+        <TextField
+          label="Notatki"
+          multiline
+          rows={4}
+          {...register("notes")}
+          fullWidth
+          sx={{ marginBottom: 2 }}
+        />
+
+        {/* Przycisk */}
+        <Button variant="contained" color="primary" type="submit" fullWidth>
+          Dodaj pomiar
+        </Button>
       </form>
       <button onClick={usunWarke}>Usuń warkę</button> {/* Dodany przycisk "Usuń warkę" */}
       <button onClick={() => navigate('/')}>Wstecz</button>
