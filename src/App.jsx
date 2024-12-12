@@ -7,6 +7,7 @@ import Dziennik from './Dziennik';
 import Temperatury from './Temperatury';
 import NowaWarka from './NowaWarka';
 import SzczegolyWarki from './SzczegolyWarki';
+import ArchiwumWarki from './ArchiwumWarki';
 
 
 function Home() {
@@ -52,6 +53,7 @@ function App() {
         <Route path="/temperatury" element={<Temperatury />} />
         <Route path="/dziennik/nowa-warka" element={<NowaWarka />} />
         <Route path="/dziennik/:id" element={<SzczegolyWarki />} />
+        <Route path="/archiwum/:id" element={<ArchiwumWarki />} /> 
       </Routes>
     </BrowserRouter>
   );

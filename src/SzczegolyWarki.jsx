@@ -91,10 +91,18 @@ function SzczegolyWarki() {
   if (!warka) {
     return <div>Warka nie znaleziona.</div>;
   }
+  const handleArchiwizuj = () => {
+    navigate(`/archiwum/${id}`, { state: { warka, pomiary } }); 
+  };
 
   return (
     <div className="app-container">
-      <h1>Szczegóły warki: {warka.nazwa}</h1>
+     <div style={{ display: 'flex', alignItems: 'center' }}>
+        <h1>Szczegóły warki: {warka.nazwa}</h1>
+        <Button variant="contained" color="primary" onClick={handleArchiwizuj}>
+         Archiwizuj warkę
+       </Button>
+      </div>
       <Typography variant="body2" color="text.secondary">
         Dzień nastawienia: {warka.data}
       </Typography>
