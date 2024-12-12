@@ -15,6 +15,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 import Grid from '@mui/material/Grid';
 
+// dodać ukryte menu do usuwania i archiwizacji warki 
 
 
 function SzczegolyWarki() {
@@ -118,64 +119,6 @@ function SzczegolyWarki() {
       <Typography variant="body2" color="text.secondary">
         Rodzaj cukru: {warka.rodzajCukru}
       </Typography>
-
-      <h2>Pomiary:</h2>
-      <ul>
-        {pomiary.map((pomiar, index) => (
-          <Card key={index} sx={{ marginBottom: 2 }}>
-            <CardContent className="card-content">
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    Data: {pomiar.data}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    Godzina: {pomiar.godzina}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    Blg: {pomiar.blg}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    Temperatura: {pomiar.temperatura}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    Piana: {pomiar.piana ? 'Tak' : 'Nie'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="body2" color="text.secondary">
-                    CO2: {pomiar.co2 ? 'Tak' : 'Nie'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body2" color="text.secondary">
-                    Notatki: {pomiar.notes}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                onClick={() => usunPomiar(index)}
-                sx={{ marginTop: 1 }}
-              >
-                Usuń
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </ul>
-
       <h3>Dodaj pomiar:</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Data i godzina */}
@@ -236,6 +179,64 @@ function SzczegolyWarki() {
           Dodaj pomiar
         </Button>
       </form>
+      <h2>Pomiary:</h2>
+      <ul>
+        {pomiary.map((pomiar, index) => (
+          <Card key={index} sx={{ marginBottom: 2 }}>
+            <CardContent className="card-content">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Data: {pomiar.data}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Godzina: {pomiar.godzina}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Blg: {pomiar.blg}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Temperatura: {pomiar.temperatura}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Piana: {pomiar.piana ? 'Tak' : 'Nie'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    CO2: {pomiar.co2 ? 'Tak' : 'Nie'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="body2" color="text.secondary">
+                    Notatki: {pomiar.notes}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                onClick={() => usunPomiar(index)}
+                sx={{ marginTop: 1 }}
+              >
+                Usuń
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </ul>
+
+     
       <p></p>
       <div className="button-container">
         <div sx={{ marginTop: 2 }}>
