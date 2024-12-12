@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 function Kalkulator() {
   const navigate = useNavigate();
@@ -27,7 +33,7 @@ function Kalkulator() {
         gramyCukruNaButelke = 4;
     }
 
-    const iloscButelek = litry * 2; 
+    const iloscButelek = litry * 2;
     const calkowitaIloscCukru = iloscButelek * gramyCukruNaButelke;
 
     setWynikCukru(calkowitaIloscCukru);
@@ -35,36 +41,45 @@ function Kalkulator() {
   };
 
   return (
-    <div>
-      <p>Kalkulator Refermentacji</p>
+    <div className="app-container">
+      <h1>Kalkulator refermentacji</h1>
 
-      <div>
-        <label htmlFor="litryPiwa">Litry piwa:</label>
-        <input
-          type="number"
-          id="litryPiwa"
-          value={litryPiwa}
-          onChange={(e) => setLitryPiwa(e.target.value)}
-        />
-      </div>
+      <TextField
+        label="Litry piwa"
+        type="number"
+        value={litryPiwa}
+        onChange={(e) => setLitryPiwa(e.target.value)}
+        fullWidth // Dodaj fullWidth, aby pole zajmowało całą szerokość
+        sx={{ marginBottom: 2 }} // Dodaj margines dolny
+      />
 
-      <div>
-        <label htmlFor="gazowanie">Gazowanie:</label>
-        <select id="gazowanie" value={gazowanie} onChange={(e) => setGazowanie(e.target.value)}>
-          <option value="mało">Mało</option>
-          <option value="standardowo">Standardowo</option>
-          <option value="dużo">Dużo</option>
-        </select>
-      </div>
+      <FormControl fullWidth sx={{ marginBottom: 2 }}>
+        <InputLabel id="gazowanie-label">Gazowanie</InputLabel>
+        <Select
+          labelId="gazowanie-label"
+          id="gazowanie"
+          value={gazowanie}
+          label="Gazowanie"
+          onChange={(e) => setGazowanie(e.target.value)}
+        >
+          <MenuItem value="mało">Mało</MenuItem>
+          <MenuItem value="standardowo">Standardowo</MenuItem>
+          <MenuItem value="dużo">Dużo</MenuItem>
+        </Select>
+      </FormControl>
 
-      <button onClick={oblicz}>Oblicz</button>
+      <Button variant="contained" color="primary" onClick={oblicz} fullWidth>
+        Oblicz
+      </Button>
+      {/* Elementy wyświetlające wyniki */}
+  {wynikCukru && (
+    <p>Potrzebujesz {wynikCukru} gramów cukru.</p>
+  )}
+  {wynikButelek && (
+    <p>Będziesz potrzebował {wynikButelek} butelek.</p>
+  )}
 
-      {wynikCukru !== null && (
-        <div>
-          <p>Dodaj {wynikCukru}g cukru rozpuszczonego w letniej wodzie.</p>
-          <p>Będziesz potrzebował {wynikButelek} butelek.</p>
-        </div>
-      )}
+  {/* ... reszta kodu ... */}
 
       <button onClick={() => navigate('/')}>Wstecz</button>
     </div>

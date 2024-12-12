@@ -12,6 +12,7 @@ import SzczegolyWarki from './SzczegolyWarki';
 function Home() {
   const navigate = useNavigate();
   const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.0.0')
+  
   return (
     
      <div className="app-container">
@@ -50,7 +51,7 @@ function App() {
         <Route path="/dziennik" element={<Dziennik />} />
         <Route path="/temperatury" element={<Temperatury />} />
         <Route path="/dziennik/nowa-warka" element={<NowaWarka />} />
-        <Route path="/dziennik/warka/:id" element={<SzczegolyWarki />} /> 
+        <Route path="/dziennik/:id" element={<SzczegolyWarki />} />
       </Routes>
     </BrowserRouter>
   );
