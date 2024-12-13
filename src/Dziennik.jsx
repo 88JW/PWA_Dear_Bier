@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import AddIcon from '@mui/icons-material/Add'; 
 
 function Dziennik() {
   const [warki, setWarki] = useState([]);
@@ -34,10 +36,25 @@ function Dziennik() {
         ))}
       </ul>
       <div className="button-container"> {/* Dodaj klasę tutaj */}
-        <Link to="/dziennik/nowa-warka">
-          <button>Stwórz nową warkę</button>
-        </Link>
-        <button onClick={() => navigate('/')}>Wstecz</button>
+      <Link to="/dziennik/nowa-warka"> {/* Link do /dziennik/nowa-warka */}
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          sx={{ mr: 2 }}
+        >
+          Stwórz nową warkę
+        </Button>
+      </Link>
+
+      {/* Przycisk "Wstecz" */}
+      <Button
+        variant="outlined"
+        startIcon={<ArrowBackIosNewIcon />}
+        onClick={() => navigate('/')}
+        sx={{ mr: 2 }}
+      >
+        Wstecz
+      </Button>
       </div>
     </div>
   );

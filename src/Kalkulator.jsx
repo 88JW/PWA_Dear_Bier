@@ -6,6 +6,10 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+
+
 
 function Kalkulator() {
   const navigate = useNavigate();
@@ -40,6 +44,7 @@ function Kalkulator() {
     setWynikButelek(iloscButelek);
   };
 
+
   return (
     <div className="app-container">
       <h1>Kalkulator refermentacji</h1>
@@ -72,16 +77,21 @@ function Kalkulator() {
         Oblicz
       </Button>
       {/* Elementy wyświetlające wyniki */}
-  {wynikCukru && (
-    <p>Potrzebujesz {wynikCukru} gramów cukru.</p>
-  )}
-  {wynikButelek && (
-    <p>Będziesz potrzebował {wynikButelek} butelek.</p>
-  )}
+      {wynikCukru && (
+        <p>Potrzebujesz {wynikCukru} gramów cukru.</p>
+      )}
+      {wynikButelek && (
+        <p>Będziesz potrzebował {wynikButelek} butelek.</p>
+      )}
 
-  {/* ... reszta kodu ... */}
+      <p></p>
+      <Button
+        variant="outlined"
+        startIcon={<ArrowBackIosNewIcon />}
+        onClick={() => navigate('/')}>
+        Wstecz
+      </Button>
 
-      <button onClick={() => navigate('/')}>Wstecz</button>
     </div>
   );
 }

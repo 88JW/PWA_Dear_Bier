@@ -2,6 +2,10 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import SaveIcon from '@mui/icons-material/Save';
+import { TextField,} from '@mui/material';
 
 function NowaWarka() {
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
@@ -14,6 +18,14 @@ function NowaWarka() {
     if (warkiData) {
       setWarki(JSON.parse(warkiData));
     }
+    const warkiFromLocalStorage = localStorage.getItem('warki');
+  if (warkiFromLocalStorage) {
+    setWarki(JSON.parse(warkiFromLocalStorage));
+  }
+
+  // Wyczyść dane formularza z localStorage
+  localStorage.removeItem('formularzNowaWarka'); 
+    
 
     // Pobierz dane formularza z localStorage
     const formularzData = localStorage.getItem('formularzNowaWarka');
@@ -28,7 +40,7 @@ function NowaWarka() {
   const onSubmit = (data) => {
     const newId = Date.now();
     setId(newId);
-
+    localStorage.setItem(`warka-${newId}-notatka`, data.notatki);
     localStorage.setItem(`warka-${newId}`, JSON.stringify(data));
 
     const noweWarki = [...warki, { id: newId, ...data }];
@@ -42,43 +54,77 @@ function NowaWarka() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Nowa warka</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="nazwa">Nazwa warki:</label>
-          <input type="text" id="nazwa" {...register("nazwa", { required: true })} />
-          {errors.nazwa && <span>To pole jest wymagane</span>}
-        </div>
-        <div>
-          <label htmlFor="data">Dzień nastawienia:</label>
-          <input type="date" id="data" {...register("data", { required: true })} />
-          {errors.data && <span>To pole jest wymagane</span>}
-        </div>
-        <div>
-          <label htmlFor="data">Rodzaj kitu:</label>
-          <input type="text" id="rodzajKitu" {...register("rodzajKitu", { required: true })} />
-          {errors.rodzajKitu && <span>To pole jest wymagane</span>}
-        </div>
-        <div>
-          <label htmlFor="data">drozdze:</label>
-          <input type="text" id="drozdze" {...register("drozdze", { required: true })} />
-          {errors.drozdze && <span>To pole jest wymagane</span>}
-        </div>
-        <div>
-          <label htmlFor="data">chmiel:</label>
-          <input type="text" id="chmiel" {...register("chmiel", { required: true })} />
-          {errors.chmiel && <span>To pole jest wymagane</span>}
-        </div>
-        <div>
-          <label htmlFor="data">rodzajCukru:</label>
-          <input type="text" id="rodzajCukru" {...register("rodzajCukru", { required: true })} />
-          {errors.rodzajCukru && <span>To pole jest wymagane</span>}
-        </div>
+        {/* Nazwa warki */}
+        <TextField
+          label="Nazwa warki"
+          {...register("nazwa", { required: true })}
+          fullWidth
+          margin="normal"
+          error={!!errors.nazwa}
+          helperText={errors.nazwa ? 'To pole jest wymagane' : ''}
+          defaultValue=""
+        />
 
+        {/* Dzień nastawienia */}
+        <TextField
+  label="Dzień nastawienia"
+  type="date"
+  {...register("data", { required: true })}
+  fullWidth
+  margin="normal"
+  InputLabelProps={{ shrink: true }}
+  error={!!errors.data}
+  helperText={errors.data ? 'To pole jest wymagane' : ''}
+  defaultValue={new Date().toLocaleDateString('en-CA')} // Dodajemy aktualny dzień
+/>
 
-        {/* ... pozostałe pola formularza ... */}
-        <button type="submit">Zapisz i dodaj pomiary</button>
+        {/* Rodzaj kitu, drożdże, chmiel, rodzaj cukru */}
+        {[
+          { name: "rodzajKitu", label: "Rodzaj kitu" },
+          { name: "drozdze", label: "Drożdże" },
+          { name: "chmiel", label: "Chmiel" },
+          { name: "rodzajCukru", label: "Rodzaj cukru" },
+        ].map((field) => (
+          <TextField
+            key={field.name}
+            label={field.label}
+            {...register(field.name, { required: true })}
+            fullWidth
+            margin="normal"
+            error={!!errors[field.name]}
+            helperText={errors[field.name] ? 'To pole jest wymagane' : ''}
+          />
+        ))}
+        <TextField
+  label="Notatki"
+  {...register("notatki")} 
+  fullWidth
+  margin="normal"
+  multiline 
+  rows={4}
+/>
+
+        {/* Przyciski */}
+        <Button
+          variant="contained"
+          startIcon={<SaveIcon />}
+          type="submit"
+          sx={{ mr: 2 }}
+        >
+          Zapisz i dodaj pomiary
+        </Button>
+        <p></p>
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIosNewIcon />}
+          onClick={() => navigate(-1)}
+          sx={{ mr: 2 }}
+        >
+          Wstecz
+        </Button>
       </form>
     </div>
   );

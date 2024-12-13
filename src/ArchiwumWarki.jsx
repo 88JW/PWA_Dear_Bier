@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useRef } from 'react';
-
-
-
+import { Button } from '@mui/material';
+import PrintIcon from '@mui/icons-material/Print';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 function ArchiwumWarki() {
     const location = useLocation();
@@ -16,11 +15,10 @@ function ArchiwumWarki() {
     const { warka, pomiary } = location.state ? location.state : { warka: null, pomiary: [] };
     const handlePrint = () => {
         window.print();
-      };
-
+    };
 
     return (
-        
+
         <div className="warka-data-container">
             <style>
                 {`
@@ -44,7 +42,7 @@ function ArchiwumWarki() {
           
         `}
             </style>
-        
+
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6">Archiwum Warki: {warka ? warka.nazwa : 'Brak danych'}</Typography>
@@ -73,6 +71,10 @@ function ArchiwumWarki() {
                     <tr>
                         <td>Rodzaj cukru:</td>
                         <td>{warka ? warka.rodzajCukru : 'Brak danych'}</td>
+                    </tr>
+                    <tr>
+                        <td>Notatki:</td>
+                        <td>{warka ? warka.notatki : 'Brak danych'}</td>
                     </tr>
                 </tbody>
             </table>
@@ -107,12 +109,16 @@ function ArchiwumWarki() {
             ) : (
                 <p>Brak pomiarów dla tej warki.</p>
             )}
-            
+
             <div className="button-container">
-                <div sx={{ marginTop: 2 }}>
-                <button onClick={handlePrint}>Drukuj</button>
-                    <button onClick={() => navigate('/')}>Wstecz</button>
-                </div></div>
+                <Button variant="outlined" startIcon={<PrintIcon />} onClick={handlePrint} sx={{ mr: 2 }}>
+                    Drukuj
+                </Button>
+                <Button variant="outlined" startIcon={<ArrowBackIosNewIcon />} onClick={() => navigate('/')} sx={{ mr: 2 }}>
+                    Wstecz
+                </Button>
+
+            </div>
 
         </div>
 

@@ -35,7 +35,7 @@ function SzczegolyWarki() {
   const open = Boolean(anchorEl);
   const [defaultDate, setDefaultDate] = useState(new Date().toISOString().slice(0, 10)); // Stan dla daty
   const [defaultTime, setDefaultTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })); // Stan dla godziny
-
+  const notatka = localStorage.getItem(`warka-${id}-notatka`);
   useEffect(() => {
     // Ustawienie domyślnych wartości dla daty i godziny
     setDefaultDate(new Date().toISOString().slice(0, 10));
@@ -172,6 +172,11 @@ function SzczegolyWarki() {
       <Typography variant="body2" color="text.secondary">
         Rodzaj cukru: {warka.rodzajCukru}
       </Typography>
+      {notatka && ( // Wyświetlamy notatkę, jeśli istnieje
+        <Typography variant="body2" color="text.secondary">
+          Notatka: {notatka}
+        </Typography>
+      )}
       <h3>Dodaj pomiar:</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Data i godzina */}
