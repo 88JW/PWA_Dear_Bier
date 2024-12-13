@@ -8,6 +8,9 @@ import Temperatury from './Temperatury';
 import NowaWarka from './NowaWarka';
 import SzczegolyWarki from './SzczegolyWarki';
 import ArchiwumWarki from './ArchiwumWarki';
+import GotoweTemperatury from './GotoweTemperatury';
+
+
 
 
 function Home() {
@@ -25,12 +28,8 @@ function Home() {
         <div className="tile">Dziennik warzenia</div>
       </Link><Link to="/kalkulator" onClick={() => navigate('/kalkulator')}>
         <div className="tile">Kalkulator refermentacji</div>
-      </Link>
-      <Link to="/przepisy" onClick={() => navigate('/przepisy')}>
-        <div className="tile">Przepisy</div>
-      </Link>
-      
-      <Link to="/temperatury" onClick={() => navigate('/dziennik')}>
+      </Link>      
+      <Link to="/temperatury" onClick={() => navigate('/temperatury')}>
         <div className="tile">Kalkulator Temperatur</div>
       </Link>
       
@@ -54,6 +53,7 @@ function App() {
         <Route path="/dziennik/nowa-warka" element={<NowaWarka />} />
         <Route path="/dziennik/:id" element={<SzczegolyWarki />} />
         <Route path="/archiwum/:id" element={<ArchiwumWarki />} /> 
+        <Route path="/GotoweTemperatury" element={<GotoweTemperatury />} /> 
       </Routes>
     </BrowserRouter>
   );

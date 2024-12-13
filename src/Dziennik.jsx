@@ -19,8 +19,8 @@ function Dziennik() {
   }, []);
   return (
     <div className="app-container">
-      <h1>Dziennik warzenia</h1>
-      <h2>Warki:</h2>
+      <h2>Dziennik warzenia</h2>
+      <h3>Warki:</h3>
       <ul>
         {warki.map((warka) => (
           <Card key={warka.id} sx={{ marginBottom: 2 }}> {/* Dodaj margines dolny */}
