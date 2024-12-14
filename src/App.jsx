@@ -21,7 +21,8 @@ function Home() {
     
      <div className="app-container">
     <div className="app-header"> {/* Dodaj diva z nazwą aplikacji */}
-        <h1>Dear Bier App</h1> 
+        <h1>Dear Bier app</h1> 
+        
       </div>
     <div className="tile-container">
       <Link to="/dziennik" onClick={() => navigate('/dziennik')}>

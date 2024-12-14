@@ -117,7 +117,9 @@ function SzczegolyWarki() {
   return (
     <div className="app-container">
       <div style={{ display: 'flex', alignItems: 'center' }}> 
-      <h1>Szczegóły warki: {warka.nazwa}</h1>
+      
+      <h1>Szczegóły Warki:</h1>
+      
         <div>
           <IconButton
             aria-label="more"
@@ -154,9 +156,11 @@ function SzczegolyWarki() {
             </MenuItem>
           </Menu>
         </div>
-       
-
+      
       </div>
+      <Typography variant="body2" color="text.secondary">
+        Nazwa: {warka.nazwa}
+      </Typography>
       <Typography variant="body2" color="text.secondary">
         Dzień nastawienia: {warka.data}
       </Typography>

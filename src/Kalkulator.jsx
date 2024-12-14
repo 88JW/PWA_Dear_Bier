@@ -47,7 +47,7 @@ function Kalkulator() {
 
   return (
     <div className="app-container">
-      <h1>Kalkulator refermentacji</h1>
+      <h1>Kalkulator Refrmentaci</h1>
 
       <TextField
         label="Litry piwa"
