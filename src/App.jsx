@@ -1,6 +1,8 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react'; 
+import { Grid } from '@mui/material'; // Import Grid
+
 import Kalkulator from './Kalkulator';
 import Przepisy from './Przepisy';
 import Dziennik from './Dziennik';
@@ -17,34 +19,43 @@ import Kalendarz from './Kalendarz';
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.0.1')
+  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.2.0')
   
   return (
     
-     <div className="app-container">
-    <div className="app-header"> {/* Dodaj diva z nazwą aplikacji */}
-        <h1>Dear Bier app</h1> 
-        
-      </div>
-    <div className="tile-container">
-      <Link to="/dziennik" onClick={() => navigate('/dziennik')}>
-        <div className="tile">Dziennik warzenia</div>
-      </Link><Link to="/kalkulator" onClick={() => navigate('/kalkulator')}>
-        <div className="tile">Kalkulator refermentacji</div>
-      </Link>      
-      <Link to="/temperatury" onClick={() => navigate('/temperatury')}>
-        <div className="tile">Kalkulator Temperatur</div>
-      </Link>
-      <Link to="/kalendarz" onClick={() => navigate('/kalendarz')}>
-        <div className="tile">Kalendarz</div>
-      </Link>
-      
-      
+    <div className="app-container">
+    <div className="app-header">
+      <h1>Dear Bier app</h1>
     </div>
+
+    <Grid container spacing={2}> {/* Dodaj Grid container */}
+      <Grid item xs={6}> {/* Każdy kafelek zajmuje połowę szerokości (xs={6}) */}
+        <Link to="/dziennik" onClick={() => navigate('/dziennik')}>
+          <div className="tile">Dziennik warzenia</div>
+        </Link>
+      </Grid>
+      <Grid item xs={6}>
+        <Link to="/kalkulator" onClick={() => navigate('/kalkulator')}>
+          <div className="tile">Kalkulator refermentacji</div>
+        </Link>
+      </Grid>
+      <Grid item xs={6}>
+        <Link to="/temperatury" onClick={() => navigate('/temperatury')}>
+          <div className="tile">Kalkulator Temperatur</div>
+        </Link>
+      </Grid>
+      <Grid item xs={6}>
+        <Link to="/kalendarz" onClick={() => navigate('/kalendarz')}>
+          <div className="tile">Kalendarz</div>
+        </Link>
+      </Grid>
+      {/* Dodaj tutaj kolejne kafelki w podobny sposób */}
+    </Grid> {/* Zamknij Grid container */}
+
     <div className="app-footer">
-        <p>Wersja: {wersjaAplikacji}</p>
-      </div>
+      <p>Wersja: {wersjaAplikacji}</p>
     </div>
+  </div>
   );
 }
 

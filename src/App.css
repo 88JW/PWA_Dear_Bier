@@ -22,18 +22,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tile {
-  width: 200px;
-  height: 150px;
-  margin: 10px;
+  width: 180px; 
+  height: 180px; 
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
   cursor: pointer;
   overflow: hidden; 
-  background-image: url('./assets/tlo.png'); 
+  background-color: #8a8a8a;
+  /* background-image: url('./assets/tlo.png'); 
   background-size: cover;
   background-repeat: no-repeat;
   transition: color 4s ease, background-position 5s ease; 
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,13 +42,14 @@ h1, h2, h3, h4, h5, h6 {
   color: #5a2c0b;
   font-weight: bold;
   font-size: 20px; 
+  text-align: center;
 }
 
 /* Efekt hover */
-.tile:hover {
+/* .tile:hover {
   background-position: center top 80%;
   color: white; 
-}
+} */
 
 body {
   margin: 0;
