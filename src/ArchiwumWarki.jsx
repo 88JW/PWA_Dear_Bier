@@ -41,17 +41,15 @@ function ArchiwumWarki() {
           }
           
         `}
-            </style>
-
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6">Archiwum Warki: {warka ? warka.nazwa : 'Brak danych'}</Typography>
-                </Toolbar>
-            </AppBar>
-
-
+        </style>                 
+            <h3>   Archiwum Warki: </h3>
+    
             <table>
                 <tbody>
+                    <tr>
+                        <td>Nazwa warki:</td>
+                        <td>{warka ? warka.nazwa : 'Brak danych'}</td>
+                    </tr>
                     <tr>
                         <td>Data nastawienia:</td>
                         <td>{warka ? warka.data : 'Brak danych'}</td>
