@@ -9,6 +9,8 @@ import NowaWarka from './NowaWarka';
 import SzczegolyWarki from './SzczegolyWarki';
 import ArchiwumWarki from './ArchiwumWarki';
 import GotoweTemperatury from './GotoweTemperatury';
+import Kalendarz from './Kalendarz';
+
 
 
 
@@ -33,6 +35,10 @@ function Home() {
       <Link to="/temperatury" onClick={() => navigate('/temperatury')}>
         <div className="tile">Kalkulator Temperatur</div>
       </Link>
+      <Link to="/kalendarz" onClick={() => navigate('/kalendarz')}>
+        <div className="tile">Kalendarz</div>
+      </Link>
+      
       
     </div>
     <div className="app-footer">
@@ -55,6 +61,7 @@ function App() {
         <Route path="/dziennik/:id" element={<SzczegolyWarki />} />
         <Route path="/archiwum/:id" element={<ArchiwumWarki />} /> 
         <Route path="/GotoweTemperatury" element={<GotoweTemperatury />} /> 
+        <Route path="/kalendarz" element={<Kalendarz />} /> 
       </Routes>
     </BrowserRouter>
   );
