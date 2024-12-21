@@ -9,7 +9,6 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 
 import Kalkulator from './Kalkulator';
-import Przepisy from './Przepisy';
 import Dziennik from './Dziennik';
 import Temperatury from './Temperatury';
 import NowaWarka from './NowaWarka';
@@ -82,7 +81,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/kalkulator" element={<Kalkulator />} />
-        <Route path="/przepisy" element={<Przepisy />} />
         <Route path="/dziennik" element={<Dziennik />} />
         <Route path="/temperatury" element={<Temperatury />} />
         <Route path="/dziennik/nowa-warka" element={<NowaWarka />} />

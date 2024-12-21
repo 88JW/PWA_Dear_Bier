@@ -78,10 +78,11 @@ function Kalkulator() {
       </Button>
       {/* Elementy wyświetlające wyniki */}
       {wynikCukru && (
-        <p>Potrzebujesz {wynikCukru} gramów cukru.</p>
+        <p>Potrzebujesz {wynikCukru} gramów cukru. Rozpuść cukier w 300ml letniej wody.</p>
+        
       )}
       {wynikButelek && (
-        <p>Będziesz potrzebował {wynikButelek} butelek.</p>
+        <p>Będzie potrzebne {wynikButelek} butelek.</p>
       )}
 
       <p></p>

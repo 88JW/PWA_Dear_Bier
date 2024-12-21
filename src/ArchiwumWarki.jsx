@@ -2,9 +2,6 @@ import React from 'react';
 import './App.css';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import PrintIcon from '@mui/icons-material/Print';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -12,7 +9,18 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 function ArchiwumWarki() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { warka, pomiary } = location.state ? location.state : { warka: null, pomiary: [] };
+    const { warka, pomiary } = location.state
+        ? location.state
+        : {
+            warka: {
+                nazwa: null,
+                data: null,
+                rodzajKitu: null,
+                piana: null,  // Dodanie domyślnej wartości dla piany
+                co2: null,    // Dodanie domyślnej wartości dla co2
+                notatki: null // Dodanie domyślnej wartości dla notatek
+            },
+        };
     const handlePrint = () => {
         window.print();
     };
@@ -41,9 +49,9 @@ function ArchiwumWarki() {
           }
           
         `}
-        </style>                 
+            </style>
             <h3>   Archiwum Warki: </h3>
-    
+
             <table>
                 <tbody>
                     <tr>
@@ -85,9 +93,7 @@ function ArchiwumWarki() {
                             <th>Godzina</th>
                             <th>Blg</th>
                             <th>Temperatura</th>
-                            <th>Piana</th>
-                            <th>CO2</th>
-                            <th>Notatki</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -97,9 +103,7 @@ function ArchiwumWarki() {
                                 <td>{pomiar.godzina}</td>
                                 <td>{pomiar.blg}</td>
                                 <td>{pomiar.temperatura}</td>
-                                <td>{pomiar.piana}</td>
-                                <td>{pomiar.co2}</td>
-                                <td>{pomiar.notatki}</td>
+
                             </tr>
                         ))}
                     </tbody>
