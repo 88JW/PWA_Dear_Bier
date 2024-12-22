@@ -1,28 +1,19 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import TextField from '@mui/material/TextField';
-import dayjs from 'dayjs';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
+import dayjs from "dayjs";
 
 function Kalendarz() {
   const navigate = useNavigate();
   const [selectedDateTime, setSelectedDateTime] = useState(dayjs());
-  const [nazwa, setNazwa] = useState('');
-
-  // Wczytaj wydarzenia z localStorage podczas pierwszego renderowania
+  const [nazwa, setNazwa] = useState("");
   const [wydarzenia, setWydarzenia] = useState(() => {
-    const storedWydarzenia = localStorage.getItem('wydarzenia');
+    const storedWydarzenia = localStorage.getItem("wydarzenia");
     return storedWydarzenia ? JSON.parse(storedWydarzenia) : [];
   });
 
@@ -36,33 +27,31 @@ function Kalendarz() {
 
   const dodajWydarzenie = () => {
     const dataRozpoczecia = selectedDateTime;
-    const dataZakonczenia = dataRozpoczecia.add(5, 'day');
-
+    const dataZakonczenia = dataRozpoczecia.add(5, "day");
     const noweWydarzenie = {
-      data: dataRozpoczecia.format('YYYY-MM-DD'),
-      czas: dataRozpoczecia.format('HH:mm'),
+      data: dataRozpoczecia.format("YYYY-MM-DD"),
+      czas: dataRozpoczecia.format("HH:mm"),
       nazwa: nazwa,
-      dataZakonczenia: dataZakonczenia.format('YYYY-MM-DD'),
+      dataZakonczenia: dataZakonczenia.format("YYYY-MM-DD"),
     };
-
     setWydarzenia([...wydarzenia, noweWydarzenie]);
-    setNazwa('');
-
-    // Zapisz zaktualizowane wydarzenia w localStorage
-    localStorage.setItem('wydarzenia', JSON.stringify([...wydarzenia, noweWydarzenie]));
+    setNazwa("");
+    localStorage.setItem(
+      "wydarzenia",
+      JSON.stringify([...wydarzenia, noweWydarzenie])
+    );
   };
 
   const usunWydarzenie = (index) => {
     const updatedWydarzenia = [...wydarzenia];
     updatedWydarzenia.splice(index, 1);
     setWydarzenia(updatedWydarzenia);
-    localStorage.setItem('wydarzenia', JSON.stringify(updatedWydarzenia));
+    localStorage.setItem("wydarzenia", JSON.stringify(updatedWydarzenia));
   };
 
   return (
     <div className="app-container">
       <h1>Kalendarz Oczekiwania</h1>
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <MobileDateTimePicker
           label="Data i czas wydarzenia"
@@ -71,15 +60,12 @@ function Kalendarz() {
           renderInput={(params) => <TextField {...params} />}
         />
       </LocalizationProvider>
-
       <TextField
         label="Nazwa wydarzenia"
         value={nazwa}
         onChange={handleNazwaChange}
         fullWidth
-        margin="normal"
-      />
-
+        margin="normal"/>
       <Button variant="contained" onClick={dodajWydarzenie}>
         Dodaj wydarzenie
       </Button>
@@ -107,25 +93,21 @@ function Kalendarz() {
                 </Typography>
               </Grid>
             </Grid>
-
             <Button
               variant="outlined"
               color="error"
               size="small"
               onClick={() => usunWydarzenie(index)}
-              sx={{ marginTop: 1 }}
-            >
+              sx={{ marginTop: 1 }}>
               Usuń
             </Button>
           </CardContent>
         </Card>
       ))}
-
       <Button
         variant="outlined"
         startIcon={<ArrowBackIosNewIcon />}
-        onClick={() => navigate('/')}
-      >
+        onClick={() => navigate("/")}>
         Wstecz
       </Button>
     </div>
