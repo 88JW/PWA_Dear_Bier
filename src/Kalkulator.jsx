@@ -1,36 +1,34 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 function Kalkulator() {
   const navigate = useNavigate();
-  const [litryPiwa, setLitryPiwa] = useState('');
-  const [gazowanie, setGazowanie] = useState('standardowo');
+  const [litryPiwa, setLitryPiwa] = useState("");
+  const [gazowanie, setGazowanie] = useState("standardowo");
   const [wynikCukru, setWynikCukru] = useState(null);
   const [wynikButelek, setWynikButelek] = useState(null);
 
   const oblicz = () => {
     const litry = parseFloat(litryPiwa);
     if (isNaN(litry) || litry <= 0) {
-      alert('Podaj poprawną liczbę litrów piwa.');
+      alert("Podaj poprawną liczbę litrów piwa.");
       return;
     }
 
     let gramyCukruNaButelke;
     switch (gazowanie) {
-      case 'mało':
+      case "mało":
         gramyCukruNaButelke = 3;
         break;
-      case 'dużo':
+      case "dużo":
         gramyCukruNaButelke = 5;
         break;
       default:
@@ -43,7 +41,6 @@ function Kalkulator() {
     setWynikCukru(calkowitaIloscCukru);
     setWynikButelek(iloscButelek);
   };
-
 
   return (
     <div className="app-container">
@@ -78,21 +75,21 @@ function Kalkulator() {
       </Button>
       {/* Elementy wyświetlające wyniki */}
       {wynikCukru && (
-        <p>Potrzebujesz {wynikCukru} gramów cukru. Rozpuść cukier w 300ml letniej wody.</p>
-        
+        <p>
+          Potrzebujesz {wynikCukru} gramów cukru. Rozpuść cukier w 300ml letniej
+          wody.
+        </p>
       )}
-      {wynikButelek && (
-        <p>Będzie potrzebne {wynikButelek} butelek.</p>
-      )}
+      {wynikButelek && <p>Będzie potrzebne {wynikButelek} butelek.</p>}
 
-      <p></p>
+      
       <Button
         variant="outlined"
         startIcon={<ArrowBackIosNewIcon />}
-        onClick={() => navigate('/')}>
+        onClick={() => navigate("/kalkulatory")}
+      >
         Wstecz
       </Button>
-
     </div>
   );
 }

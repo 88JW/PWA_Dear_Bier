@@ -1,12 +1,12 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
 
 import AssignmentIcon from '@mui/icons-material/Assignment'; 
-import ThermostatIcon from '@mui/icons-material/Thermostat'; 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; 
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import CalculateIcon from "@mui/icons-material/Calculate";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 import Kalkulator from './Kalkulator';
 import Dziennik from './Dziennik';
@@ -16,6 +16,8 @@ import SzczegolyWarki from './SzczegolyWarki';
 import ArchiwumWarki from './ArchiwumWarki';
 import GotoweTemperatury from './GotoweTemperatury';
 import Kalendarz from './Kalendarz';
+import Kalkulatory from './Kalkulatory';
+import Receptury from './Receptury';
 
 
 
@@ -23,10 +25,9 @@ import Kalendarz from './Kalendarz';
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.2.0')
+  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.3.0')
 
   return (
-
     <div className="app-container">
       <div className="app-header">
         <h1>Dear Bier app</h1>
@@ -34,7 +35,7 @@ function Home() {
 
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={6} sm={4} md={3}>
-          <Link to="/dziennik" onClick={() => navigate('/dziennik')}>
+          <Link to="/dziennik" onClick={() => navigate("/dziennik")}>
             <div className="tile">
               <AssignmentIcon /> {/* Ikona notatnika */}
               Dziennik warzenia
@@ -42,7 +43,7 @@ function Home() {
           </Link>
         </Grid>
         <Grid item xs={6} sm={4} md={3}>
-          <Link to="/kalendarz" onClick={() => navigate('/kalendarz')}>
+          <Link to="/kalendarz" onClick={() => navigate("/kalendarz")}>
             <div className="tile">
               <CalendarTodayIcon /> {/* Ikona kalendarza */}
               Kalendarz
@@ -50,22 +51,21 @@ function Home() {
           </Link>
         </Grid>
         <Grid item xs={6} sm={4} md={3}>
-          <Link to="/kalkulator" onClick={() => navigate('/kalkulator')}>
+          <Link to="/kalkulatory" onClick={() => navigate("/kalkulatory")}>
             <div className="tile">
-              <WaterDropIcon /> {/* Ikona butelki */}
-              Kalkulator refermentacji
+              <CalculateIcon /> 
+              Kalkulatory
             </div>
           </Link>
         </Grid>
         <Grid item xs={6} sm={4} md={3}>
-          <Link to="/temperatury" onClick={() => navigate('/temperatury')}>
+          <Link to="/receptury" onClick={() => navigate("/receptury")}>
             <div className="tile">
-              <ThermostatIcon /> {/* Ikona termometru */}
-              Kalkulator Temperatur
+              <MenuBookIcon /> 
+              Receptury
             </div>
           </Link>
         </Grid>
-
       </Grid>
 
       <div className="app-footer">
@@ -80,6 +80,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/kalkulatory" element={<Kalkulatory />} />
+        <Route path="/receptury" element={<Receptury />} />
         <Route path="/kalkulator" element={<Kalkulator />} />
         <Route path="/dziennik" element={<Dziennik />} />
         <Route path="/temperatury" element={<Temperatury />} />
