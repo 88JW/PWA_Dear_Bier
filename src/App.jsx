@@ -27,6 +27,7 @@ import Receptury from "./Receptury";
 import DodajRecepture from "./DodajRecepture";
 import SzczegolyReceptury from "./SzczegolyReceptury";
 import IBUCalculator from "./IBUCalculator";
+import Ideas from "./Ideas";
 
 function Home() {
   const navigate = useNavigate();
@@ -75,6 +76,9 @@ function Home() {
 
       <div className="app-footer">
         <p>Wersja: {wersjaAplikacji}</p>
+        <Link to="/ideas" onClick={() => navigate("/ideas")}>
+          <p>Pomysły</p>
+        </Link>
       </div>
     </div>
   );
@@ -98,6 +102,7 @@ function App() {
         <Route path="/dodaj-recepture" element={<DodajRecepture />} />
         <Route path="/receptura/:id" element={<SzczegolyReceptury />} />
         <Route path="/ibuClculator" element={<IBUCalculator />} />
+        <Route path="/ideas" element={<Ideas />} />
       </Routes>
     </BrowserRouter>
   );
