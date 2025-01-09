@@ -1,31 +1,35 @@
-import './App.css';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Grid } from '@mui/material';
+import "./App.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+import { useState } from "react";
+import { Grid } from "@mui/material";
 
-import AssignmentIcon from '@mui/icons-material/Assignment'; 
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; 
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 
-import Kalkulator from './Kalkulator';
-import Dziennik from './Dziennik';
-import Temperatury from './Temperatury';
-import NowaWarka from './NowaWarka';
-import SzczegolyWarki from './SzczegolyWarki';
-import ArchiwumWarki from './ArchiwumWarki';
-import GotoweTemperatury from './GotoweTemperatury';
-import Kalendarz from './Kalendarz';
-import Kalkulatory from './Kalkulatory';
-import Receptury from './Receptury';
-
-
-
-
+import Kalkulator from "./Kalkulator";
+import Dziennik from "./Dziennik";
+import Temperatury from "./Temperatury";
+import NowaWarka from "./NowaWarka";
+import SzczegolyWarki from "./SzczegolyWarki";
+import ArchiwumWarki from "./ArchiwumWarki";
+import GotoweTemperatury from "./GotoweTemperatury";
+import Kalendarz from "./Kalendarz";
+import Kalkulatory from "./Kalkulatory";
+import Receptury from "./Receptury";
+import DodajRecepture from "./DodajRecepture";
+import SzczegolyReceptury from "./SzczegolyReceptury";
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState('v1.3.0')
+  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.4.0");
 
   return (
     <div className="app-container">
@@ -53,7 +57,7 @@ function Home() {
         <Grid item xs={6} sm={4} md={3}>
           <Link to="/kalkulatory" onClick={() => navigate("/kalkulatory")}>
             <div className="tile">
-              <CalculateIcon /> 
+              <CalculateIcon />
               Kalkulatory
             </div>
           </Link>
@@ -61,7 +65,7 @@ function Home() {
         <Grid item xs={6} sm={4} md={3}>
           <Link to="/receptury" onClick={() => navigate("/receptury")}>
             <div className="tile">
-              <MenuBookIcon /> 
+              <MenuBookIcon />
               Receptury
             </div>
           </Link>
@@ -90,6 +94,8 @@ function App() {
         <Route path="/archiwum/:id" element={<ArchiwumWarki />} />
         <Route path="/GotoweTemperatury" element={<GotoweTemperatury />} />
         <Route path="/kalendarz" element={<Kalendarz />} />
+        <Route path="/dodaj-recepture" element={<DodajRecepture />} />
+        <Route path="/receptura/:id" element={<SzczegolyReceptury />} />
       </Routes>
     </BrowserRouter>
   );
