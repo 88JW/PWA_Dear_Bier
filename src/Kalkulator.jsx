@@ -9,6 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
+// IBU = ( (Masa chmielu [g] * Alfa-kwasy [%] * Wykorzystanie [%]) / Objętość brzeczki [l] ) * 10
+
 function Kalkulator() {
   const navigate = useNavigate();
   const [litryPiwa, setLitryPiwa] = useState("");

@@ -26,6 +26,7 @@ import Kalkulatory from "./Kalkulatory";
 import Receptury from "./Receptury";
 import DodajRecepture from "./DodajRecepture";
 import SzczegolyReceptury from "./SzczegolyReceptury";
+import IBUCalculator from "./IBUCalculator";
 
 function Home() {
   const navigate = useNavigate();
@@ -96,6 +97,7 @@ function App() {
         <Route path="/kalendarz" element={<Kalendarz />} />
         <Route path="/dodaj-recepture" element={<DodajRecepture />} />
         <Route path="/receptura/:id" element={<SzczegolyReceptury />} />
+        <Route path="/ibuClculator" element={<IBUCalculator />} />
       </Routes>
     </BrowserRouter>
   );
