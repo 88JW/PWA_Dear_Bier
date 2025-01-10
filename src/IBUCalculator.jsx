@@ -26,8 +26,8 @@ const IBUCalculator = () => {
   ]);
   const [litryPiwa, setLitryPiwa] = useState("");
   const [wynikIBU, setWynikIBU] = useState(null);
-  const [originalGravity, setOriginalGravity] = useState("");
   const [originalGravityBlg, setOriginalGravityBlg] = useState("");
+  const [originalGravity, setOriginalGravity] = useState("");
   const navigate = useNavigate();
 
   const dodajChmiel = () => {
@@ -49,25 +49,11 @@ const IBUCalculator = () => {
       )
     );
   };
-
   const calculateSGFromBlg = (blg) => {
     if (blg === "") return "";
     const blgValue = parseFloat(blg);
     if (isNaN(blgValue)) return "";
     return (1 + blgValue / 259).toFixed(3);
-  };
-
-  const calculateBlgFromSG = (sg) => {
-    if (sg === "") return "";
-    const sgValue = parseFloat(sg);
-    if (isNaN(sgValue)) return "";
-    return (-1 * 259 + 259 * sgValue).toFixed(1);
-  };
-
-  const handleOriginalGravityChange = (event) => {
-    const { value } = event.target;
-    setOriginalGravity(value);
-    setOriginalGravityBlg(calculateBlgFromSG(value));
   };
 
   const handleOriginalGravityBlgChange = (event) => {
@@ -79,6 +65,7 @@ const IBUCalculator = () => {
   const obliczIBU = () => {
     const litry = parseFloat(litryPiwa);
     const og = parseFloat(originalGravity);
+
     if (isNaN(litry) || litry <= 0) {
       alert("Podaj poprawną liczbę litrów piwa.");
       return;
@@ -95,17 +82,14 @@ const IBUCalculator = () => {
       const alfa = parseFloat(chmiel.alfaKwasy);
       const czasGotowania = parseFloat(chmiel.czasGotowania);
 
-      console.log("Masa chmielu:", masa);
-      console.log("Alfa kwasy:", alfa);
-      console.log("Czas gotowania:", czasGotowania);
-
-      // Obliczanie wykorzystania chmielu (U) wg wzoru Tinsetha
+      if (isNaN(masa) || isNaN(alfa) || isNaN(czasGotowania)) {
+        return;
+      }
       const wykorzystanie =
         1.65 *
         Math.pow(0.000125, og - 1) *
         ((1 - Math.exp(-0.04 * czasGotowania)) / 4.15);
 
-      console.log("Wykorzystanie:", wykorzystanie);
       if (masa && alfa && wykorzystanie > 0) {
         const ibuChmielu = (masa * alfa * wykorzystanie * 1000) / litry;
         totalIbu += ibuChmielu;
@@ -124,26 +108,12 @@ const IBUCalculator = () => {
         onChange={(e) => setLitryPiwa(e.target.value)}
         fullWidth
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginBottom: "16px",
-        }}
-      >
-        <StyledTextField
-          label="Gęstość początkowa brzeczki (SG)"
-          type="number"
-          value={originalGravity}
-          onChange={handleOriginalGravityChange}
-        />
-        <StyledTextField
-          label="Gęstość początkowa brzeczki (Blg)"
-          type="number"
-          value={originalGravityBlg}
-          onChange={handleOriginalGravityBlgChange}
-        />
-      </div>
+      <StyledTextField
+        label="Gęstość początkowa brzeczki (Blg)"
+        type="number"
+        value={originalGravityBlg}
+        onChange={handleOriginalGravityBlgChange}
+      />
       {chmiele.map((chmiel, index) => (
         <div
           key={chmiel.id}

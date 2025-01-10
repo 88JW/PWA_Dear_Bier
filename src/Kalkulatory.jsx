@@ -33,6 +33,11 @@ function Kalkulatory() {
             <div className="tile">IBU</div>
           </Link>
         </Grid>
+        <Grid item xs={6} sm={4} md={3}>
+          <Link to="/blgClculator" onClick={() => navigate("/blgClculator")}>
+            <div className="tile">BLG</div>
+          </Link>
+        </Grid>
       </Grid>
       {location.pathname === "/ibuClculator" && <IBUCalculator />}{" "}
       {/* Wyświetl kalkulator IBU */}

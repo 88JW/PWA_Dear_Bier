@@ -27,6 +27,7 @@ import Receptury from "./Receptury";
 import DodajRecepture from "./DodajRecepture";
 import SzczegolyReceptury from "./SzczegolyReceptury";
 import IBUCalculator from "./IBUCalculator";
+import BLGCalculator from "./BLGCalculator";
 import Ideas from "./Ideas";
 
 function Home() {
@@ -102,6 +103,7 @@ function App() {
         <Route path="/dodaj-recepture" element={<DodajRecepture />} />
         <Route path="/receptura/:id" element={<SzczegolyReceptury />} />
         <Route path="/ibuClculator" element={<IBUCalculator />} />
+        <Route path="/blgClculator" element={<BLGCalculator />} />
         <Route path="/ideas" element={<Ideas />} />
       </Routes>
     </BrowserRouter>
