@@ -1,195 +1,212 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { styled } from "@mui/material/styles";
 
-function IBUCalculator() {
-  const navigate = useNavigate();
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    width: "auto",
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  marginRight: theme.spacing(1),
+}));
+
+const IBUCalculator = () => {
   const [chmiele, setChmiele] = useState([
-    { masa: "", alfaKwasy: "", czasGotowania: "" },
+    { id: uuidv4(), masa: "", alfaKwasy: "", czasGotowania: "" },
   ]);
-  const [objetoscBrzeczki, setObjetoscBrzeczki] = useState("");
-  const [ibu, setIbu] = useState(0);
+  const [litryPiwa, setLitryPiwa] = useState("");
+  const [wynikIBU, setWynikIBU] = useState(null);
+  const [originalGravity, setOriginalGravity] = useState("");
+  const [originalGravityBlg, setOriginalGravityBlg] = useState("");
+  const navigate = useNavigate();
 
-  const handleInputChange = (index, event) => {
+  const dodajChmiel = () => {
+    setChmiele([
+      ...chmiele,
+      { id: uuidv4(), masa: "", alfaKwasy: "", czasGotowania: "" },
+    ]);
+  };
+
+  const usunChmiel = (id) => {
+    setChmiele(chmiele.filter((chmiel) => chmiel.id !== id));
+  };
+
+  const handleChmielChange = (id, event) => {
     const { name, value } = event.target;
-    const updatedChmiele = [...chmiele];
-    updatedChmiele[index][name] = value;
-    setChmiele(updatedChmiele);
+    setChmiele(
+      chmiele.map((chmiel) =>
+        chmiel.id === id ? { ...chmiel, [name]: value } : chmiel
+      )
+    );
   };
 
-  const handleAddChmiel = () => {
-    setChmiele([...chmiele, { masa: "", alfaKwasy: "", czasGotowania: "" }]);
+  const calculateSGFromBlg = (blg) => {
+    if (blg === "") return "";
+    const blgValue = parseFloat(blg);
+    if (isNaN(blgValue)) return "";
+    return (1 + blgValue / 259).toFixed(3);
   };
 
-  const handleRemoveChmiel = (index) => {
-    if (chmiele.length > 1) {
-      const updatedChmiele = [...chmiele];
-      updatedChmiele.splice(index, 1);
-      setChmiele(updatedChmiele);
-    }
+  const calculateBlgFromSG = (sg) => {
+    if (sg === "") return "";
+    const sgValue = parseFloat(sg);
+    if (isNaN(sgValue)) return "";
+    return (-1 * 259 + 259 * sgValue).toFixed(1);
   };
 
-  const calculateIbu = () => {
-    const objetosc = parseFloat(objetoscBrzeczki);
-    if (isNaN(objetosc) || objetosc <= 0) {
-      setIbu("Wprowadź poprawną objętość brzeczki.");
+  const handleOriginalGravityChange = (event) => {
+    const { value } = event.target;
+    setOriginalGravity(value);
+    setOriginalGravityBlg(calculateBlgFromSG(value));
+  };
+
+  const handleOriginalGravityBlgChange = (event) => {
+    const { value } = event.target;
+    setOriginalGravityBlg(value);
+    setOriginalGravity(calculateSGFromBlg(value));
+  };
+
+  const obliczIBU = () => {
+    const litry = parseFloat(litryPiwa);
+    const og = parseFloat(originalGravity);
+    if (isNaN(litry) || litry <= 0) {
+      alert("Podaj poprawną liczbę litrów piwa.");
       return;
     }
-    let totalIbu = 0;
-    console.log("Początkowa wartość totalIbu:", totalIbu);
-    console.log("Objętość brzeczki:", objetosc);
-    const gestoscBrzeczki = 1.05; // Domyślna gęstość brzeczki
-    const bignessFactor = 1.65 * Math.pow(0.000125, gestoscBrzeczki - 1);
 
-    for (const chmiel of chmiele) {
-      console.log("--- Nowy chmiel ---");
+    if (isNaN(og) || og <= 0) {
+      alert("Podaj poprawną gęstość brzeczki.");
+      return;
+    }
+
+    let totalIbu = 0;
+    chmiele.forEach((chmiel) => {
       const masa = parseFloat(chmiel.masa);
       const alfa = parseFloat(chmiel.alfaKwasy);
-      const czasGotowania = chmiel.czasGotowania;
+      const czasGotowania = parseFloat(chmiel.czasGotowania);
 
       console.log("Masa chmielu:", masa);
       console.log("Alfa kwasy:", alfa);
       console.log("Czas gotowania:", czasGotowania);
-      let wykorzystanie = 0;
 
-      switch (czasGotowania) {
-        case "90":
-          wykorzystanie = 0.3;
-          break;
-        case "60":
-          wykorzystanie = 0.27;
-          break;
-        case "45":
-          wykorzystanie = 0.24;
-          break;
-        case "30":
-          wykorzystanie = 0.22;
-          break;
-        case "20":
-          wykorzystanie = 0.15;
-          break;
-        case "15":
-          wykorzystanie = 0.12;
-          break;
-        case "10":
-          wykorzystanie = 0.09;
-          break;
-        case "5":
-          wykorzystanie = 0.07;
-          break;
-        case "0":
-          wykorzystanie = 0.05;
-          break;
-        default:
-          wykorzystanie = 0;
-      }
+      // Obliczanie wykorzystania chmielu (U) wg wzoru Tinsetha
+      const wykorzystanie =
+        1.65 *
+        Math.pow(0.000125, og - 1) *
+        ((1 - Math.exp(-0.04 * czasGotowania)) / 4.15);
+
       console.log("Wykorzystanie:", wykorzystanie);
       if (masa && alfa && wykorzystanie > 0) {
-        const ibuChmielu =
-          ((masa * alfa * wykorzystanie * bignessFactor) / objetosc) * 10;
-        console.log("IBU dla chmielu:", ibuChmielu);
+        const ibuChmielu = (masa * alfa * wykorzystanie * 1000) / litry;
         totalIbu += ibuChmielu;
-        console.log("Total IBU po dodaniu chmielu:", totalIbu);
-      } else {
-        console.log("Niepoprawne dane chmielu, pomijam.");
       }
-    }
-    console.log("Łączne IBU przed ustawieniem stanu:", totalIbu);
-    if (totalIbu > 0) {
-      setIbu(totalIbu.toFixed(1));
-    } else {
-      setIbu("Wprowadź dane chmielu");
-    }
+    });
+    setWynikIBU(totalIbu.toFixed(2));
   };
 
   return (
     <div className="app-container">
       <h1>Kalkulator IBU</h1>
+      <StyledTextField
+        label="Litry piwa"
+        type="number"
+        value={litryPiwa}
+        onChange={(e) => setLitryPiwa(e.target.value)}
+        fullWidth
+      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "16px",
+        }}
+      >
+        <StyledTextField
+          label="Gęstość początkowa brzeczki (SG)"
+          type="number"
+          value={originalGravity}
+          onChange={handleOriginalGravityChange}
+        />
+        <StyledTextField
+          label="Gęstość początkowa brzeczki (Blg)"
+          type="number"
+          value={originalGravityBlg}
+          onChange={handleOriginalGravityBlgChange}
+        />
+      </div>
       {chmiele.map((chmiel, index) => (
-        <div key={index}>
-          <h3>Chmiel {index + 1}</h3>
-          <TextField
-            label="Masa chmielu (g)"
+        <div
+          key={chmiel.id}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            marginBottom: "10px",
+          }}
+        >
+          <Typography variant="h6" style={{ marginBottom: "10px" }}>
+            Chmiel {index + 1}
+          </Typography>
+          <StyledTextField
+            label="Masa (g)"
             type="number"
             name="masa"
             value={chmiel.masa}
-            onChange={(event) => handleInputChange(index, event)}
-            fullWidth
-            sx={{ marginBottom: 2 }}
+            onChange={(event) => handleChmielChange(chmiel.id, event)}
           />
-          <TextField
-            label="Zawartość alfa-kwasów (%)"
+          <StyledTextField
+            label="Alfa kwasy (%)"
             type="number"
             name="alfaKwasy"
             value={chmiel.alfaKwasy}
-            onChange={(event) => handleInputChange(index, event)}
-            fullWidth
-            sx={{ marginBottom: 2 }}
+            onChange={(event) => handleChmielChange(chmiel.id, event)}
           />
-          <FormControl fullWidth sx={{ marginBottom: 2 }}>
-            <InputLabel id={`czas-gotowania-label-${index}`}>
-              Czas gotowania (min)
-            </InputLabel>
-            <Select
-              labelId={`czas-gotowania-label-${index}`}
-              id={`czas-gotowania-${index}`}
-              name="czasGotowania"
-              value={chmiel.czasGotowania}
-              label="Czas gotowania (min)"
-              onChange={(event) => handleInputChange(index, event)}
-            >
-              <MenuItem value="90">90</MenuItem>
-              <MenuItem value="60">60</MenuItem>
-              <MenuItem value="45">45</MenuItem>
-              <MenuItem value="30">30</MenuItem>
-              <MenuItem value="20">20</MenuItem>
-              <MenuItem value="15">15</MenuItem>
-              <MenuItem value="10">10</MenuItem>
-              <MenuItem value="5">5</MenuItem>
-              <MenuItem value="0">0</MenuItem>
-            </Select>
-          </FormControl>
-          <IconButton
-            aria-label="delete"
-            onClick={() => handleRemoveChmiel(index)}
+          <StyledTextField
+            label="Czas gotowania (min)"
+            type="number"
+            name="czasGotowania"
+            value={chmiel.czasGotowania}
+            onChange={(event) => handleChmielChange(chmiel.id, event)}
+          />
+          <StyledButton
+            variant="outlined"
+            color="secondary"
+            onClick={() => usunChmiel(chmiel.id)}
           >
-            <DeleteIcon />
-          </IconButton>
+            -
+          </StyledButton>
         </div>
       ))}
-      <Button variant="outlined" color="primary" onClick={handleAddChmiel}>
+      <StyledButton variant="contained" color="primary" onClick={dodajChmiel}>
         Dodaj chmiel
-      </Button>
-      <TextField
-        label="Objętość brzeczki (l)"
-        type="number"
-        value={objetoscBrzeczki}
-        onChange={(e) => setObjetoscBrzeczki(e.target.value)}
-        fullWidth
-        sx={{ marginBottom: 2 }}
-      />
-
-      <Button variant="contained" color="primary" onClick={calculateIbu}>
+      </StyledButton>
+      <StyledButton variant="contained" color="primary" onClick={obliczIBU}>
         Oblicz IBU
-      </Button>
-      <p> IBU: {ibu} </p>
-      <Button
+      </StyledButton>
+      {wynikIBU !== null && (
+        <Typography variant="h5" style={{ marginTop: "20px" }}>
+          Wynik IBU: {wynikIBU}
+        </Typography>
+      )}
+      <StyledButton
         variant="outlined"
         startIcon={<ArrowBackIosNewIcon />}
         onClick={() => navigate("/kalkulatory")}
       >
         Wstecz
-      </Button>
+      </StyledButton>
     </div>
   );
-}
+};
 
 export default IBUCalculator;
