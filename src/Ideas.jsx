@@ -22,11 +22,20 @@ function Ideas() {
               </li>
             </ul>
           </div>
+          <div className="ideas-subsection">
+            <h3>Ocenianie Piwa</h3>
+            <ul>
+              
+              <li>
+              Dodanie całego segmentu dla oceny piwa, lokali, ze zdjęciami oceną i opisem.
+              </li>
+            </ul>
+          </div>
 
           <div className="ideas-subsection">
             <h3>Zaawansowane kalkulatory:</h3>
             <ul>
-              <li>Kalkulator goryczki (IBU).</li>
+              <li><del>Kalkulator goryczki (IBU).</del></li>
               <li>Kalkulator koloru piwa (SRM/EBC).</li>
             </ul>
           </div>
