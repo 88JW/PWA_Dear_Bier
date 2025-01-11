@@ -10,10 +10,11 @@ import { useState } from "react";
 import { Grid } from "@mui/material";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import StarRateIcon from "@mui/icons-material/StarRate";
 
+// import stron całej aplikacji
 import Kalkulator from "./Kalkulator";
 import Dziennik from "./Dziennik";
 import Temperatury from "./Temperatury";
@@ -28,6 +29,7 @@ import DodajRecepture from "./DodajRecepture";
 import SzczegolyReceptury from "./SzczegolyReceptury";
 import IBUCalculator from "./IBUCalculator";
 import BLGCalculator from "./BLGCalculator";
+import Dzienniki from "./Dzienniki";
 import Ideas from "./Ideas";
 
 function Home() {
@@ -42,18 +44,18 @@ function Home() {
 
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={6} sm={4} md={3}>
-          <Link to="/dziennik" onClick={() => navigate("/dziennik")}>
+          <Link to="/dzienniki" onClick={() => navigate("/dzienniki")}>
             <div className="tile">
               <AssignmentIcon /> {/* Ikona notatnika */}
-              Dziennik warzenia
+              Dzienniki
             </div>
           </Link>
         </Grid>
         <Grid item xs={6} sm={4} md={3}>
           <Link to="/kalendarz" onClick={() => navigate("/kalendarz")}>
             <div className="tile">
-              <CalendarTodayIcon /> {/* Ikona kalendarza */}
-              Kalendarz
+              <StarRateIcon /> {/* Ikona kalendarza */}
+              Oceń Piwo
             </div>
           </Link>
         </Grid>
@@ -88,6 +90,7 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
+      {/* przepierowania do konkretnych stron całej aplikacji */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/kalkulatory" element={<Kalkulatory />} />
@@ -104,6 +107,7 @@ function App() {
         <Route path="/receptura/:id" element={<SzczegolyReceptury />} />
         <Route path="/ibuClculator" element={<IBUCalculator />} />
         <Route path="/blgClculator" element={<BLGCalculator />} />
+        <Route path="/dzienniki" element={<Dzienniki />} />
         <Route path="/ideas" element={<Ideas />} />
       </Routes>
     </BrowserRouter>
