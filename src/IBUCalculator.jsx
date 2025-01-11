@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { styled } from "@mui/material/styles";
+import { v4 as uuidv4 } from "uuid";
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    width: "auto",
-  },
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -25,10 +20,8 @@ const IBUCalculator = () => {
     { id: uuidv4(), masa: "", alfaKwasy: "", czasGotowania: "" },
   ]);
   const [litryPiwa, setLitryPiwa] = useState("");
-  const [wynikIBU, setWynikIBU] = useState(null);
-  const [originalGravityBlg, setOriginalGravityBlg] = useState("");
   const [originalGravity, setOriginalGravity] = useState("");
-  const navigate = useNavigate();
+  const [wynikIBU, setWynikIBU] = useState(null);
 
   const dodajChmiel = () => {
     setChmiele([
@@ -49,54 +42,48 @@ const IBUCalculator = () => {
       )
     );
   };
-  const calculateSGFromBlg = (blg) => {
-    if (blg === "") return "";
-    const blgValue = parseFloat(blg);
-    if (isNaN(blgValue)) return "";
-    return (1 + blgValue / 259).toFixed(3);
-  };
 
-  const handleOriginalGravityBlgChange = (event) => {
-    const { value } = event.target;
-    setOriginalGravityBlg(value);
-    setOriginalGravity(calculateSGFromBlg(value));
-  };
+   const obliczIBU = () => {
+     const litry = parseFloat(litryPiwa);
+     const og = parseFloat(originalGravity);
 
-  const obliczIBU = () => {
-    const litry = parseFloat(litryPiwa);
-    const og = parseFloat(originalGravity);
+     if (isNaN(litry) || litry <= 0) {
+       alert("Podaj poprawną liczbę litrów piwa.");
+       return;
+     }
 
-    if (isNaN(litry) || litry <= 0) {
-      alert("Podaj poprawną liczbę litrów piwa.");
-      return;
-    }
+     if (isNaN(og) || og <= 0) {
+       alert("Podaj poprawną gęstość początkową brzeczki.");
+       return;
+     }
 
-    if (isNaN(og) || og <= 0) {
-      alert("Podaj poprawną gęstość brzeczki.");
-      return;
-    }
+     let totalIbu = 0;
 
-    let totalIbu = 0;
-    chmiele.forEach((chmiel) => {
-      const masa = parseFloat(chmiel.masa);
-      const alfa = parseFloat(chmiel.alfaKwasy);
-      const czasGotowania = parseFloat(chmiel.czasGotowania);
+     chmiele.forEach((chmiel) => {
+       const masa = parseFloat(chmiel.masa);
+       const alfa = parseFloat(chmiel.alfaKwasy);
+       const czasGotowania = parseFloat(chmiel.czasGotowania);
 
-      if (isNaN(masa) || isNaN(alfa) || isNaN(czasGotowania)) {
-        return;
-      }
-      const wykorzystanie =
-        1.65 *
-        Math.pow(0.000125, og - 1) *
-        ((1 - Math.exp(-0.04 * czasGotowania)) / 4.15);
+       if (isNaN(masa) || isNaN(alfa) || isNaN(czasGotowania)) {
+         return;
+       }
 
-      if (masa && alfa && wykorzystanie > 0) {
-        const ibuChmielu = (masa * alfa * wykorzystanie * 1000) / litry;
-        totalIbu += ibuChmielu;
-      }
-    });
-    setWynikIBU(totalIbu.toFixed(2));
-  };
+       // Obliczenie współczynnika wykorzystania Rager
+       const gestoscBrzeczki = og;
+       const wspolczynnikGestosci =
+         1.65 * Math.pow(0.000125, gestoscBrzeczki - 1);
+       const wspolczynnikCzasuGotowania =
+         (1 - Math.exp(-0.04 * czasGotowania)) / 4.15;
+       const utilization = wspolczynnikGestosci * wspolczynnikCzasuGotowania;
+
+       if (utilization > 0) {
+         const ibuChmielu = (masa * (alfa / 100) * utilization * 1000) / litry;
+         totalIbu += ibuChmielu;
+       }
+     });
+
+     setWynikIBU(totalIbu.toFixed(2));
+   };
 
   return (
     <div className="app-container">
@@ -106,27 +93,16 @@ const IBUCalculator = () => {
         type="number"
         value={litryPiwa}
         onChange={(e) => setLitryPiwa(e.target.value)}
-        fullWidth
       />
       <StyledTextField
-        label="Gęstość początkowa brzeczki (Blg)"
+        label="Gęstość początkowa brzeczki (SG)"
         type="number"
-        value={originalGravityBlg}
-        onChange={handleOriginalGravityBlgChange}
+        value={originalGravity}
+        onChange={(e) => setOriginalGravity(e.target.value)}
       />
       {chmiele.map((chmiel, index) => (
-        <div
-          key={chmiel.id}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            marginBottom: "10px",
-          }}
-        >
-          <Typography variant="h6" style={{ marginBottom: "10px" }}>
-            Chmiel {index + 1}
-          </Typography>
+        <div key={chmiel.id} style={{ marginBottom: "10px" }}>
+          <Typography variant="h6">Chmiel {index + 1}</Typography>
           <StyledTextField
             label="Masa (g)"
             type="number"
@@ -153,7 +129,7 @@ const IBUCalculator = () => {
             color="secondary"
             onClick={() => usunChmiel(chmiel.id)}
           >
-            -
+            Usuń
           </StyledButton>
         </div>
       ))}
@@ -168,13 +144,7 @@ const IBUCalculator = () => {
           Wynik IBU: {wynikIBU}
         </Typography>
       )}
-      <StyledButton
-        variant="outlined"
-        startIcon={<ArrowBackIosNewIcon />}
-        onClick={() => navigate("/kalkulatory")}
-      >
-        Wstecz
-      </StyledButton>
+      
     </div>
   );
 };
