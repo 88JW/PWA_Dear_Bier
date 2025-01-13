@@ -31,6 +31,9 @@ import IBUCalculator from "./IBUCalculator";
 import BLGCalculator from "./BLGCalculator";
 import Dzienniki from "./Dzienniki";
 import OcenPiwo from "./OcenPiwo";
+import NowyWpis from "./NowyWpis";
+import SzczegolyWpisu from "./SzczegolyWpisu";
+
 import Ideas from "./Ideas";
 
 function Home() {
@@ -110,6 +113,8 @@ function App() {
         <Route path="/blgClculator" element={<BLGCalculator />} />
         <Route path="/dzienniki" element={<Dzienniki />} />
         <Route path="/ocenPiwo" element={<OcenPiwo />} />
+        <Route path="/nowy-wpis" element={<NowyWpis />} />
+        <Route path="/wpis/:id" element={<SzczegolyWpisu />} /> 
 
  
         <Route path="/ideas" element={<Ideas />} />
