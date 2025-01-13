@@ -9,6 +9,8 @@ import {
 import { useState } from "react";
 import { Grid } from "@mui/material";
 
+
+
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -33,7 +35,6 @@ import Dzienniki from "./Dzienniki";
 import OcenPiwo from "./OcenPiwo";
 import NowyWpis from "./NowyWpis";
 import SzczegolyWpisu from "./SzczegolyWpisu";
-
 import Ideas from "./Ideas";
 
 function Home() {

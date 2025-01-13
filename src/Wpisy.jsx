@@ -1,49 +1,76 @@
-import { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dexie from 'dexie';
 
+// Utwórz instancję Dexie i zdefiniuj schemat bazy danych (jeśli nie jest zdefiniowany w innym miejscu)
+const db = new Dexie('OcenyPiwaDB');
+db.version(1).stores({
+  wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
+});
 
 function Wpisy() {
-  const [wpisy, setWpisy] = useState(JSON.parse(localStorage.getItem('wpisy')) || []);
-  const navigate = useNavigate();
-  const handleDelete = (index) => {
-    const updatedWpisy = [...wpisy];
-    updatedWpisy.splice(index, 1);
-    setWpisy(updatedWpisy);
-    localStorage.setItem('wpisy', JSON.stringify(updatedWpisy));
+  const [wpisy, setWpisy] = useState([]);
+
+  useEffect(() => {
+    const fetchWpisy = async () => {
+      try {
+        const data = await db.wpisy.toArray();
+        /*console.log('Pobrane dane z IndexedDB:', data); */
+        setWpisy(data);
+      } catch (error) {
+       /* console.error('Błąd podczas pobierania wpisów:', error);*/
+
+      }
+    };
+
+    // Nasłuchiwanie zmian w IndexedDB
+    db.wpisy.hook('creating', fetchWpisy);
+    db.wpisy.hook('deleting', fetchWpisy);
+    db.wpisy.hook('updating', fetchWpisy);
+
+    fetchWpisy();
+
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await db.wpisy.delete(id);
+      setWpisy(wpisy.filter(wpis => wpis.id !== id));
+    } catch (error) {
+     /* console.error('Błąd podczas usuwania wpisu:', error); */
+
+    }
   };
-  const handleClick = (id) => {
-    navigate(`/wpis/${id}`); 
-  };
+
+ /* console.log('Stan wpisy:', wpisy); */
 
   return (
     <div>
-      {wpisy.map((wpis, index) => (
-         <Card 
-         key={index} 
-         sx={{ maxWidth: 345, marginBottom: 2 }}
-         onClick={() => handleClick(wpis.id || index)} 
-       >
-          <CardMedia
-            component="img"
-            height="140"
-            image={wpis.miniatura}
-            alt={wpis.nazwa}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {wpis.nazwa}
-            </Typography>
-            {/* ... inne informacje o wpisie */}
+      {wpisy.map((wpis) => {
+        
+     /*   console.log('Renderowanie wpisu:', wpis); */
+        return (
+          <Card key={wpis.id} sx={{ maxWidth: 345, marginBottom: 2 }}>
+            <CardMedia
+              component="img"
+              height="140"
+              image={wpis.miniatura}
+              alt={wpis.nazwa}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {wpis.nazwa}
+              </Typography>
+              {/* ... (inne informacje o wpisie, np. ocena) */}
 
-            {/* Przycisk "Usuń" */}
-            <IconButton aria-label="delete" onClick={() => handleDelete(index)}>
-              <DeleteIcon />
-            </IconButton>
-          </CardContent>
-        </Card>
-      ))}
+              <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
+                <DeleteIcon />
+              </IconButton>
+            </CardContent>
+          </Card>
+        );
+      })}
     </div>
   );
 }
