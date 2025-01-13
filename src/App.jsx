@@ -30,11 +30,12 @@ import SzczegolyReceptury from "./SzczegolyReceptury";
 import IBUCalculator from "./IBUCalculator";
 import BLGCalculator from "./BLGCalculator";
 import Dzienniki from "./Dzienniki";
+import OcenPiwo from "./OcenPiwo";
 import Ideas from "./Ideas";
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.6.0");
+  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.7.1");
 
   return (
     <div className="app-container">
@@ -46,15 +47,15 @@ function Home() {
         <Grid item xs={6} sm={4} md={3}>
           <Link to="/dzienniki" onClick={() => navigate("/dzienniki")}>
             <div className="tile">
-              <AssignmentIcon /> {/* Ikona notatnika */}
+              <AssignmentIcon /> 
               Dzienniki
             </div>
           </Link>
         </Grid>
         <Grid item xs={6} sm={4} md={3}>
-          <Link to="/kalendarz" onClick={() => navigate("/kalendarz")}>
+          <Link to="/ocenPiwo" onClick={() => navigate("/ocenPiwo")}>
             <div className="tile">
-              <StarRateIcon /> {/* Ikona kalendarza */}
+              <StarRateIcon /> 
               Oceń Piwo
             </div>
           </Link>
@@ -108,6 +109,9 @@ function App() {
         <Route path="/ibuClculator" element={<IBUCalculator />} />
         <Route path="/blgClculator" element={<BLGCalculator />} />
         <Route path="/dzienniki" element={<Dzienniki />} />
+        <Route path="/ocenPiwo" element={<OcenPiwo />} />
+
+ 
         <Route path="/ideas" element={<Ideas />} />
       </Routes>
     </BrowserRouter>
