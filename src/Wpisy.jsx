@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dexie from 'dexie';
@@ -16,11 +17,9 @@ function Wpisy() {
     const fetchWpisy = async () => {
       try {
         const data = await db.wpisy.toArray();
-        /*console.log('Pobrane dane z IndexedDB:', data); */
         setWpisy(data);
       } catch (error) {
-       /* console.error('Błąd podczas pobierania wpisów:', error);*/
-
+        console.error('Błąd podczas pobierania wpisów:', error);
       }
     };
 
@@ -30,7 +29,6 @@ function Wpisy() {
     db.wpisy.hook('updating', fetchWpisy);
 
     fetchWpisy();
-
   }, []);
 
   const handleDelete = async (id) => {
@@ -38,20 +36,15 @@ function Wpisy() {
       await db.wpisy.delete(id);
       setWpisy(wpisy.filter(wpis => wpis.id !== id));
     } catch (error) {
-     /* console.error('Błąd podczas usuwania wpisu:', error); */
-
+      console.error('Błąd podczas usuwania wpisu:', error);
     }
   };
 
- /* console.log('Stan wpisy:', wpisy); */
-
   return (
     <div>
-      {wpisy.map((wpis) => {
-        
-     /*   console.log('Renderowanie wpisu:', wpis); */
-        return (
-          <Card key={wpis.id} sx={{ maxWidth: 345, marginBottom: 2 }}>
+      {wpisy.map((wpis) => (
+        <Link key={wpis.id} to={`/wpis/${wpis.id}`}> {/* Link otacza Card */}
+          <Card sx={{ maxWidth: 345, marginBottom: 2 }}>
             <CardMedia
               component="img"
               height="140"
@@ -69,8 +62,8 @@ function Wpisy() {
               </IconButton>
             </CardContent>
           </Card>
-        );
-      })}
+        </Link>
+      ))}
     </div>
   );
 }

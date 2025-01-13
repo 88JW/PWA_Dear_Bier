@@ -17,6 +17,8 @@ db.version(1).stores({
   wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
 });
 
+export { db };
+
 function NowyWpis() {
   const navigate = useNavigate();
   const [nazwa, setNazwa] = useState('');
