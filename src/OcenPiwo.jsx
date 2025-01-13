@@ -10,7 +10,7 @@ function OcenPiwo() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Oceń Piwo</h1>
 
       {/* Wyświetlanie wpisów */}

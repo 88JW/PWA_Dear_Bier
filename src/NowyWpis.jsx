@@ -116,7 +116,7 @@ function NowyWpis() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Dodaj nową ocenę</h1>
       <form onSubmit={handleSubmit}>
         <TextField label="Nazwa piwa" value={nazwa} onChange={(e) => setNazwa(e.target.value)} fullWidth margin="normal" />

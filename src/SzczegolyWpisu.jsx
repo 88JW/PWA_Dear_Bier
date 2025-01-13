@@ -26,6 +26,7 @@ function SzczegolyWpisu() {
   }
 
   return (
+    <div className="app-container">
     <Card sx={{ maxWidth: 600, margin: 'auto' }}>
       <CardMedia
         component="img"
@@ -51,6 +52,7 @@ function SzczegolyWpisu() {
         {/* ... */}
       </CardContent>
     </Card>
+    </div>
   );
 }
 
