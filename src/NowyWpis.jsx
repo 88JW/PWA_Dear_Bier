@@ -11,6 +11,7 @@ import {
   Checkbox
 } from '@mui/material';
 import Dexie from 'dexie';
+import imageCompression from 'browser-image-compression';
 
 const db = new Dexie('OcenyPiwaDB');
 db.version(1).stores({
@@ -20,6 +21,9 @@ db.version(1).stores({
 export { db };
 
 function NowyWpis() {
+
+  const [compressedBlob, setCompressedBlob] = useState(null);
+
   const navigate = useNavigate();
   const [nazwa, setNazwa] = useState('');
   const [browar, setBrowar] = useState('');
@@ -48,62 +52,109 @@ function NowyWpis() {
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
+const handleImageChange = async (event) => {
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log('handleSubmit called');
-    console.log(selectedFile); // Dodany console.log
-  
-    // if (selectedFile) { // Usunięty warunek
+  const file = event.target.files[0];
+
+  // Define the options variable here
+  const options = {
+    maxSizeMB: 10, // Maksymalny rozmiar pliku w MB
+    maxWidthOrHeight: 1920, // Maksymalna szerokość lub wysokość obrazu
+    useWebWorker: true // Użyj Web Workera do kompresji
+  };
+
+  try {
+    const compressedFile = await imageCompression(file, options);
+
+    // Zapisz skompresowany obraz w IndexedDB
     const reader = new FileReader();
-  
-    reader.onload = async (e) => {
-      try {
-        const nowyWpis = {
-  
-          nazwa,
-          browar,
-          styl,
-          dataDegustacji,
-          intensywnoscAromatu,
-          jakoscAromatu,
-          nutyAromatyczne,
-          barwa,
-          klarownosc,
-          piana,
-          intensywnoscSmaku,
-          rownowaga,
-          goryczka,
-          slodycz,
-          kwasowosc,
-          nutySmakowe,
-          pijalnosc,
-          zlozonosc,
-          ogolneWrazenie,
-          uwagi,
-          miniatura: e.target.result,
-          ocena,
-        miniatura: e.target.result || null, // Ustaw null, jeśli nie ma pliku
-    };
-        console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis); 
+    reader.readAsDataURL(compressedFile);
+    reader.onloadend = () => {
+      // Ustaw selectedFile na dane base64 obrazu:
+      setSelectedFile(reader.result);
 
-        await db.wpisy.add(nowyWpis);
-  
-        console.log('Wpis dodany do IndexedDB');
-  
-        navigate('/ocenPiwo');
-      } catch (error) {
-        console.error('Błąd podczas dodawania wpisu:', error);
-        console.error(error); 
-      }
+      // Ustaw compressedBlob na skompresowany Blob:
+      setCompressedBlob(compressedFile); // <--- Dodaj tę linię
     };
-    if (selectedFile) {
-        reader.readAsDataURL(selectedFile);
-      } else {
-        // Ustaw miniaturę na null, jeśli nie ma pliku
-        reader.onload({ target: { result: null } });
+
+  } catch (error) {
+    // ... (obsługa błędów) ...
+  }
+};
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  console.log('handleSubmit called');
+  console.log(selectedFile); // Log selectedFile (base64 string)
+
+  try {
+    const nowyWpis = {
+      nazwa,
+      browar,
+      styl,
+      dataDegustacji,
+      intensywnoscAromatu,
+      jakoscAromatu,
+      nutyAromatyczne,
+      barwa,
+      klarownosc,
+      piana,
+      rownowaga,
+      goryczka,
+      slodycz,
+      kwasowosc,
+      nutySmakowe,
+      pijalnosc,
+      zlozonosc,
+      ogolneWrazenie,
+      uwagi,
+      ocena,
+      miniatura: selectedFile, // Store base64 in nowyWpis
+    };
+
+    if (compressedBlob instanceof Blob) {
+      const reader = new FileReader();
+
+      reader.onloadend = async (e) => {
+        try {
+          // You might not need to do anything here since you already have base64 in selectedFile
+        } catch (error) {
+          console.error('Wystąpił błąd podczas dodawania wpisu:', error);
+        }
       };
-    };
+
+      // This line is now redundant as you already have base64 in selectedFile
+      // reader.readAsDataURL(compressedBlob); 
+    } else {
+      console.error('Compressed blob is not a Blob.');
+
+      // Continue saving the entry without the image (miniatura is already null in this case)
+      try {
+        console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis);
+        await db.wpisy.add(nowyWpis);
+        console.log('Wpis dodany do IndexedDB');
+        await navigate('/ocenPiwo');
+      } catch (error) {
+        console.error('Wystąpił błąd podczas dodawania wpisu:', error);
+      }
+    }
+
+    console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis);
+    await db.wpisy.add(nowyWpis);
+    console.log('Wpis dodany do IndexedDB');
+    await navigate('/ocenPiwo'); 
+  } catch (error) {
+    console.error('Wystąpił błąd podczas dodawania wpisu:', error);
+  }
+};
+
+  
+
+
+
+
+
+
+
   const handleCheckboxChange = (event) => {
     const { target } = event;
     const { name, checked } = target;
@@ -169,7 +220,11 @@ function NowyWpis() {
         <TextField label="Uwagi" value={uwagi} onChange={(e) => setUwagi(e.target.value)} fullWidth margin="normal" multiline rows={3} />
 
         {/* Pole wyboru pliku i ocena */}
-        <input type="file" accept="image/*" onChange={handleFileChange} />
+        <input
+  type="file"
+  accept="image/*"
+  onChange={handleImageChange} // Zastąp handleFileChange funkcją handleImageChange
+/>
         <Typography component="legend">Ocena</Typography>
         <Rating name="ocena" value={ocena} onChange={(event, newValue) => { setOcena(newValue); }} />
 

@@ -42,28 +42,30 @@ function Wpisy() {
 
   return (
     <div>
-      {wpisy.map((wpis) => (
-        <Link key={wpis.id} to={`/wpis/${wpis.id}`}> {/* Link otacza Card */}
-          <Card sx={{ maxWidth: 345, marginBottom: 2 }}>
-            <CardMedia
-              component="img"
-              height="140"
-              image={wpis.miniatura}
-              alt={wpis.nazwa}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {wpis.nazwa}
-              </Typography>
-              {/* ... (inne informacje o wpisie, np. ocena) */}
+     {wpisy.map((wpis) => (
+  <Link key={wpis.id} to={`/wpis/${wpis.id}`} state={{ miniatura: wpis.miniatura }}>
+    <Card sx={{ maxWidth: 345, marginBottom: 2 }}>
+      {wpis.miniatura && ( // Sprawdź, czy miniatura istnieje
+        <CardMedia
+          component="img"
+          height="140"
+          image={`data:image/jpeg;base64,${wpis.miniatura}`} // Ustaw atrybut src
+          alt={wpis.nazwa}
+        />
+      )}
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {wpis.nazwa}
+        </Typography>
+        {/* ... (inne informacje o wpisie, np. ocena) */}
 
-              <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </CardContent>
-          </Card>
-        </Link>
-      ))}
+        <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
+          <DeleteIcon />
+        </IconButton>
+      </CardContent>
+    </Card>
+  </Link>
+))}
     </div>
   );
 }
