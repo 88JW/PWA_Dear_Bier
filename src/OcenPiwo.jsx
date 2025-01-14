@@ -11,7 +11,7 @@ function OcenPiwo() {
 
   return (
     <div className="app-container">
-      <h1>Oceń Piwo</h1>
+      <h2>Twoje Wspomnienia:</h2>
 
       {/* Wyświetlanie wpisów */}
       <Wpisy />

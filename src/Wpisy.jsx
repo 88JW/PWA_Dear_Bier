@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, IconButton, Rating } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dexie from 'dexie';
 
@@ -63,17 +63,22 @@ function Wpisy() {
             {wpis.miniaturaUrl && ( 
               <CardMedia
               component="img"
-              height="140"
+              height="200"
               image={wpis.miniatura}
               alt={wpis.nazwa}
               />
       )}
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h7" component="div">
           {wpis.nazwa}
         </Typography>
-        {/* ... (inne informacje o wpisie, np. ocena) */}
-
+        <Typography gutterBottom variant="h7" component="div">
+          {wpis.dataDegustacji}
+        </Typography>
+        <Rating value={wpis.ocena} readOnly />
+        
+  
+        <p></p>
         <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
           <DeleteIcon />
         </IconButton>
