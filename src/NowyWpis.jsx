@@ -113,9 +113,16 @@ const handleSubmit = async (event) => {
 
     if (compressedBlob instanceof Blob) {
       const reader = new FileReader();
+      reader.readAsArrayBuffer(plikMiniatury); 
 
       reader.onloadend = async (e) => {
         try {
+          const nowyWpis = {
+            // ... inne właściwości
+            miniatura: new Uint8Array(e.target.result), // Zapisz jako Uint8Array
+          };
+
+          await db.wpisy.add(nowyWpis);
           // You might not need to do anything here since you already have base64 in selectedFile
         } catch (error) {
           console.error('Wystąpił błąd podczas dodawania wpisu:', error);

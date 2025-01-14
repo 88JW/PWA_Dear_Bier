@@ -12,12 +12,27 @@ db.version(1).stores({
 
 function Wpisy() {
   const [wpisy, setWpisy] = useState([]);
-
+  const [wpis, setWpis] = useState(null);
   useEffect(() => {
     const fetchWpisy = async () => {
       try {
         const data = await db.wpisy.toArray();
-        setWpisy(data);
+        const wpisyZMiniaturami = await Promise.all(data.map(async (wpis) => {
+          if (wpis.miniatura) {
+            const reader = new FileReader();
+            reader.readAsDataURL(new Blob([wpis.miniatura])); // Użyj readAsDataURL
+
+            await new Promise((resolve) => {
+              reader.onload = () => {
+                wpis.miniaturaUrl = reader.result;
+                resolve();
+              };
+            });
+          }
+          return wpis;
+        }));
+
+        setWpisy(wpisyZMiniaturami); 
       } catch (error) {
         console.error('Błąd podczas pobierania wpisów:', error);
       }
@@ -43,15 +58,15 @@ function Wpisy() {
   return (
     <div>
      {wpisy.map((wpis) => (
-  <Link key={wpis.id} to={`/wpis/${wpis.id}`} state={{ miniatura: wpis.miniatura }}>
-    <Card sx={{ maxWidth: 345, marginBottom: 2 }}>
-      {wpis.miniatura && ( // Sprawdź, czy miniatura istnieje
-        <CardMedia
-          component="img"
-          height="140"
-          image={`data:image/jpeg;base64,${wpis.miniatura}`} // Ustaw atrybut src
-          alt={wpis.nazwa}
-        />
+        <Link key={wpis.id} to={`/wpis/${wpis.id}`}> 
+          <Card sx={{ maxWidth: 345, marginBottom: 2 }}>
+            {wpis.miniaturaUrl && ( 
+              <CardMedia
+              component="img"
+              height="140"
+              image={wpis.miniatura}
+              alt={wpis.nazwa}
+              />
       )}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
