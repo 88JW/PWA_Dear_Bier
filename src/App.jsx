@@ -47,7 +47,7 @@ function Home() {
         <h1>Dear Bier app</h1>
       </div>
 
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={6} sm={4} md={3}>
           <Link to="/dzienniki" onClick={() => navigate("/dzienniki")}>
             <div className="tile">
