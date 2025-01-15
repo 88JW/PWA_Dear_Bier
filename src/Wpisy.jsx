@@ -77,12 +77,10 @@ function Wpisy() {
           {wpis.dataDegustacji}
         </Typography>
         <Rating value={wpis.ocena} readOnly />
-        
-  
-        <p></p>
-        <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
+
+        {/* <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
           <DeleteIcon />
-        </IconButton>
+        </IconButton> */}
       </CardContent>
     </Card>
   </Link>

@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from './NowyWpis'; // Importuj instancję db
-import { Card, CardContent, CardMedia, Typography, Rating } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, IconButton, Rating } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 function SzczegolyWpisu() {
+  const [wpisy, setWpisy] = useState([]);
   const { id } = useParams();
   const [wpis, setWpis] = useState(null);
   const navigate = useNavigate();
@@ -27,6 +30,29 @@ function SzczegolyWpisu() {
   if (!wpis) {
     return <div>Loading...</div>; // Wyświetl komunikat ładowania, jeśli wpis nie został jeszcze pobrany
   }
+  
+  const handleDelete = async (id) => {
+    try {
+      await db.wpisy.delete(id);
+      setWpisy(wpisy.filter(wpis => wpis.id !== id));
+      navigate('/OcenPiwo'); 
+    } catch (error) {
+      console.error('Błąd podczas usuwania wpisu:', error);
+    }
+  };
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+  
+  const handleFormSubmit = async (data) => {
+    try {
+      await db.wpisy.update(wpis.id, data);
+      setWpis(data);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Błąd podczas aktualizacji wpisu:', error);
+    }
+  };
 
   return (
     <div className="app-container">
@@ -41,11 +67,12 @@ function SzczegolyWpisu() {
         }} 
       />
       <CardContent>
-      <Typography variant="body1" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
-    Ogólna ocena <Rating name="read-only" value={wpis.ocena} readOnly />
-  </Typography>
-  <Typography gutterBottom variant="h4" component="div">
+      
+  <Typography gutterBottom variant="h5" component="div">
     {wpis.nazwa}
+  </Typography>
+  <Typography variant="body1" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Ogólna ocena <Rating name="read-only" value={wpis.ocena} readOnly />
   </Typography>
   <Typography variant="body2" color="text.secondary">
     Browar: {wpis.browar}
@@ -104,6 +131,12 @@ function SzczegolyWpisu() {
   <Typography variant="body2" color="text.secondary">
     Uwagi: {wpis.uwagi}
   </Typography>
+  <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
+          <DeleteIcon />
+        </IconButton>
+        <IconButton onClick={handleEditClick}>
+      <EditIcon />
+    </IconButton>
 </CardContent>
     </Card>
     <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
