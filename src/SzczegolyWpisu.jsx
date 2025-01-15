@@ -47,8 +47,8 @@ function SzczegolyWpisu() {
         <Typography variant="body2" color="text.secondary">
           Data degustacji: {wpis.dataDegustacji}
         </Typography>
-        <Rating value={wpis.ocena} readOnly /> {/* Wyświetl ocenę */}
-        {/* Wyświetl inne szczegóły wpisu */}
+        <Rating value={wpis.ocena} readOnly />
+        
         {/* ... */}
       </CardContent>
     </Card>

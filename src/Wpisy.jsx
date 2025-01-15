@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Typography, IconButton, Rating } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Dexie from 'dexie';
+// import Dexie from 'dexie';
+import { db } from './NowyWpis';
 
 // Utwórz instancję Dexie i zdefiniuj schemat bazy danych (jeśli nie jest zdefiniowany w innym miejscu)
-const db = new Dexie('OcenyPiwaDB');
-db.version(1).stores({
-  wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
-});
+// const db = new Dexie('OcenyPiwaDB');
+// db.version(1).stores({
+//   wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
+// });
 
 function Wpisy() {
   const [wpisy, setWpisy] = useState([]);
