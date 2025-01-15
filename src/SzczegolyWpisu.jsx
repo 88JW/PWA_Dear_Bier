@@ -38,22 +38,71 @@ function SzczegolyWpisu() {
         alt={wpis.nazwa}
       />
       <CardContent>
-        <Typography gutterBottom variant="h4" component="div">
-          {wpis.nazwa}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Browar: {wpis.browar}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Styl: {wpis.styl}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Data degustacji: {wpis.dataDegustacji}
-        </Typography>
-        <Rating value={wpis.ocena} readOnly />
-        
-        {/* ... */}
-      </CardContent>
+  <Typography gutterBottom variant="h4" component="div">
+    {wpis.nazwa}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Browar: {wpis.browar}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Styl: {wpis.styl}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Data degustacji: {wpis.dataDegustacji}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Kraj: {wpis.kraj}
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Ogólna ocena <Rating name="read-only" value={wpis.ocena} readOnly />
+  </Typography>
+
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Jakość aromatu: <Rating value={wpis.jakoscAromatu} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Nuty aromatyczne: {wpis.nutyAromatyczne.map(nuta => nuta.label).join(', ')}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Barwa: {wpis.barwa}
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Klarowność: <Rating value={wpis.klarownosc} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Piana: <Rating value={wpis.piana} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Intensywność smaku: <Rating value={wpis.intensywnoscSmaku} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Równowaga: <Rating value={wpis.rownowaga} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Goryczka: {wpis.goryczka} / 10
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Słodycz: {wpis.slodycz} / 10
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Kwasowość: {wpis.kwasowosc} / 10
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Nuty smakowe: {wpis.nutySmakowe}
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Pijalność: <Rating value={wpis.pijalnosc} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Złożoność: <Rating value={wpis.zlozonosc} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Ogólne wrażenie: <Rating value={wpis.ogolneWrazenie} readOnly />
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    Uwagi: {wpis.uwagi}
+  </Typography>
+</CardContent>
     </Card>
     <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
   Wstecz
