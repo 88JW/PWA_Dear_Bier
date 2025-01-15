@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from './NowyWpis'; // Importuj instancję db
 import { Card, CardContent, CardMedia, Typography, Rating } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
+import Button from '@mui/material/Button';
 function SzczegolyWpisu() {
   const { id } = useParams();
   const [wpis, setWpis] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchWpis = async () => {
       try {
@@ -52,6 +55,9 @@ function SzczegolyWpisu() {
         {/* ... */}
       </CardContent>
     </Card>
+    <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
+  Wstecz
+</Button>
     </div>
   );
 }

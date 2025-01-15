@@ -55,6 +55,7 @@ body {
   justify-content: space-between;
   align-items: center;
   min-height: 100vh;
+  max-width: 100vw;
   color: #333;
   background-image: url('./assets/tlo.jpg'); 
   background-size: cover;
@@ -62,14 +63,15 @@ body {
 }
 
 .app-container {
-  max-width: 100vw; 
+  max-width: 80vw; 
   width: 375px;
-  max-width: 100%;
+  /* max-width: 100%; */
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 30px;
   margin-top: 30px;
+
 }
 
 @media (min-width: 576px) { /* Dla ekranów o szerokości co najmniej 576px (małe tablety) */
