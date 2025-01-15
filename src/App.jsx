@@ -39,7 +39,7 @@ import Ideas from "./Ideas";
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.7.7");
+  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.7.8");
 
   return (
     <div className="app-container">
