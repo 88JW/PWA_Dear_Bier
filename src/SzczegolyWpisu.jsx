@@ -33,11 +33,17 @@ function SzczegolyWpisu() {
     <Card sx={{ maxWidth: 600, margin: 'auto' }}>
       <CardMedia
         component="img"
-        height="300"
+        height="350"
         image={wpis.miniatura}
         alt={wpis.nazwa}
+        sx={{ 
+          objectPosition: 'center'
+        }} 
       />
       <CardContent>
+      <Typography variant="body1" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
+    Ogólna ocena <Rating name="read-only" value={wpis.ocena} readOnly />
+  </Typography>
   <Typography gutterBottom variant="h4" component="div">
     {wpis.nazwa}
   </Typography>
@@ -50,12 +56,8 @@ function SzczegolyWpisu() {
   <Typography variant="body2" color="text.secondary">
     Data degustacji: {wpis.dataDegustacji}
   </Typography>
-  <Typography variant="body2" color="text.secondary">
-    Kraj: {wpis.kraj}
-  </Typography>
-  <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
-    Ogólna ocena <Rating name="read-only" value={wpis.ocena} readOnly />
-  </Typography>
+  
+
 
   <Typography variant="body2" color="text.secondary" style={{ display: 'flex', alignItems: 'center' }}>
     Jakość aromatu: <Rating value={wpis.jakoscAromatu} readOnly />
