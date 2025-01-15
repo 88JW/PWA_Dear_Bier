@@ -50,102 +50,102 @@ function NowyWpis() {
 
 
 
-const handleImageChange = async (event) => {
+  const handleImageChange = async (event) => {
 
-  const file = event.target.files[0];
+    const file = event.target.files[0];
 
-  // Define the options variable here
-  const options = {
-    maxSizeMB: 10, // Maksymalny rozmiar pliku w MB
-    maxWidthOrHeight: 1920, // Maksymalna szerokość lub wysokość obrazu
-    useWebWorker: true // Użyj Web Workera do kompresji
-  };
-
-  try {
-    const compressedFile = await imageCompression(file, options);
-
-    // Zapisz skompresowany obraz w IndexedDB
-    const reader = new FileReader();
-    reader.readAsDataURL(compressedFile);
-    reader.onloadend = () => {
-      // Ustaw selectedFile na dane base64 obrazu:
-      setSelectedFile(reader.result);
-
-      // Ustaw compressedBlob na skompresowany Blob:
-      setCompressedBlob(compressedFile); // <--- Dodaj tę linię
+    // Define the options variable here
+    const options = {
+      maxSizeMB: 10, // Maksymalny rozmiar pliku w MB
+      maxWidthOrHeight: 1920, // Maksymalna szerokość lub wysokość obrazu
+      useWebWorker: true // Użyj Web Workera do kompresji
     };
 
-  } catch (error) {
-    // ... (obsługa błędów) ...
-  }
-};
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  console.log('handleSubmit called');
-  console.log(selectedFile); // Log selectedFile (base64 string)
+    try {
+      const compressedFile = await imageCompression(file, options);
 
-  try {
-    const nowyWpis = {
-      nazwa,
-      browar,
-      styl,
-      dataDegustacji,
-      intensywnoscAromatu,
-      jakoscAromatu,
-      nutyAromatyczne,
-      barwa,
-      klarownosc,
-      piana,
-      rownowaga,
-      goryczka,
-      slodycz,
-      kwasowosc,
-      nutySmakowe,
-      pijalnosc,
-      zlozonosc,
-      ogolneWrazenie,
-      uwagi,
-      ocena,
-      miniatura: selectedFile, // Store base64 in nowyWpis
-    };
-
-    if (compressedBlob instanceof Blob) {
+      // Zapisz skompresowany obraz w IndexedDB
       const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onloadend = () => {
+        // Ustaw selectedFile na dane base64 obrazu:
+        setSelectedFile(reader.result);
 
-      reader.onloadend = async (e) => {
+        // Ustaw compressedBlob na skompresowany Blob:
+        setCompressedBlob(compressedFile); // <--- Dodaj tę linię
+      };
+
+    } catch (error) {
+      // ... (obsługa błędów) ...
+    }
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log('handleSubmit called');
+    console.log(selectedFile); // Log selectedFile (base64 string)
+
+    try {
+      const nowyWpis = {
+        nazwa,
+        browar,
+        styl,
+        dataDegustacji,
+        intensywnoscAromatu,
+        jakoscAromatu,
+        nutyAromatyczne,
+        barwa,
+        klarownosc,
+        piana,
+        rownowaga,
+        goryczka,
+        slodycz,
+        kwasowosc,
+        nutySmakowe,
+        pijalnosc,
+        zlozonosc,
+        ogolneWrazenie,
+        uwagi,
+        ocena,
+        miniatura: selectedFile, // Store base64 in nowyWpis
+      };
+
+      if (compressedBlob instanceof Blob) {
+        const reader = new FileReader();
+
+        reader.onloadend = async (e) => {
+          try {
+            // You might not need to do anything here since you already have base64 in selectedFile
+          } catch (error) {
+            console.error('Wystąpił błąd podczas dodawania wpisu:', error);
+          }
+        };
+
+        // This line is now redundant as you already have base64 in selectedFile
+        // reader.readAsDataURL(compressedBlob); 
+      } else {
+        console.error('Compressed blob is not a Blob.');
+
+        // Continue saving the entry without the image (miniatura is already null in this case)
         try {
-          // You might not need to do anything here since you already have base64 in selectedFile
+          console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis);
+          await db.wpisy.add(nowyWpis);
+          console.log('Wpis dodany do IndexedDB');
+          await navigate('/ocenPiwo');
         } catch (error) {
           console.error('Wystąpił błąd podczas dodawania wpisu:', error);
         }
-      };
-
-      // This line is now redundant as you already have base64 in selectedFile
-      // reader.readAsDataURL(compressedBlob); 
-    } else {
-      console.error('Compressed blob is not a Blob.');
-
-      // Continue saving the entry without the image (miniatura is already null in this case)
-      try {
-        console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis);
-        await db.wpisy.add(nowyWpis);
-        console.log('Wpis dodany do IndexedDB');
-        await navigate('/ocenPiwo');
-      } catch (error) {
-        console.error('Wystąpił błąd podczas dodawania wpisu:', error);
       }
+
+      console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis);
+      await db.wpisy.add(nowyWpis);
+      console.log('Wpis dodany do IndexedDB');
+      await navigate('/ocenPiwo');
+    } catch (error) {
+      console.error('Wystąpił błąd podczas dodawania wpisu:', error);
     }
+  };
 
-    console.log('Przed dodaniem wpisu do IndexedDB:', nowyWpis);
-    await db.wpisy.add(nowyWpis);
-    console.log('Wpis dodany do IndexedDB');
-    await navigate('/ocenPiwo'); 
-  } catch (error) {
-    console.error('Wystąpił błąd podczas dodawania wpisu:', error);
-  }
-};
 
-  
 
 
 
@@ -219,16 +219,16 @@ const handleSubmit = async (event) => {
 
         {/* Pole wyboru pliku i ocena */}
         <input
-  type="file"
-  accept="image/*"
-  onChange={handleImageChange} // Zastąp handleFileChange funkcją handleImageChange
-/>
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange} // Zastąp handleFileChange funkcją handleImageChange
+        />
         <Typography component="legend">Ocena</Typography>
         <Rating name="ocena" value={ocena} onChange={(event, newValue) => { setOcena(newValue); }} />
 
         <Button type="submit" variant="contained" color="primary">
-  Dodaj ocenę
-</Button>
+          Dodaj ocenę
+        </Button>
       </form>
     </div>
   );

@@ -15,6 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EdytujWpis from './EdytujWpis'; // Import the edit component
+import { useSearchParams } from 'react-router-dom';
+
 
 
 
@@ -28,6 +30,9 @@ function SzczegolyWpisu() {
   db.version(1).stores({
     wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
   });
+
+  const [searchParams] = useSearchParams();
+  const monospaceUid = searchParams.get('monospaceUid');
 
   useEffect(() => {
     const fetchWpis = async () => {

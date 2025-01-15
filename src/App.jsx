@@ -116,6 +116,7 @@ function App() {
         <Route path="/ocenPiwo" element={<OcenPiwo />} />
         <Route path="/nowy-wpis" element={<NowyWpis />} />
         <Route path="/wpis/:id" element={<SzczegolyWpisu />} />
+        <Route path="/SzczegolyWpisu/:id" element={<SzczegolyWpisu />} /> 
 
  
         <Route path="/ideas" element={<Ideas />} />
