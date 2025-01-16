@@ -53,8 +53,8 @@ function Kalkulator() {
         type="number"
         value={litryPiwa}
         onChange={(e) => setLitryPiwa(e.target.value)}
-        fullWidth // Dodaj fullWidth, aby pole zajmowało całą szerokość
-        sx={{ marginBottom: 2 }} // Dodaj margines dolny
+        fullWidth 
+        sx={{ marginBottom: 2 }} 
       />
 
       <FormControl fullWidth sx={{ marginBottom: 2 }}>

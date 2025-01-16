@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { v4 as uuidv4 } from "uuid";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
+
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   marginBottom: theme.spacing(2),
@@ -16,6 +20,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const IBUCalculator = () => {
+  const navigate = useNavigate();
   const [chmiele, setChmiele] = useState([
     { id: uuidv4(), masa: "", alfaKwasy: "", czasGotowania: "" },
   ]);
@@ -84,10 +89,10 @@ const IBUCalculator = () => {
 
      setWynikIBU(totalIbu.toFixed(2));
    };
-
   return (
+    
     <div className="app-container">
-      <h1>Kalkulator IBU</h1>
+      <h1>Kalkulator ibu</h1>
       <StyledTextField
         label="Litry piwa"
         type="number"
@@ -144,6 +149,15 @@ const IBUCalculator = () => {
           Wynik IBU: {wynikIBU}
         </Typography>
       )}
+      <div>
+     <Button
+        variant="outlined"
+        startIcon={<ArrowBackIosNewIcon />}
+        onClick={() => navigate("/kalkulatory")}
+      >
+        Wstecz
+      </Button>
+</div>
       
     </div>
   );
