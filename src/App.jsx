@@ -42,7 +42,7 @@ function Home() {
   const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.8.1");
 
   return (
-    <div className="app-container">
+    <div>
       <div className="app-header">
         <h1>Dear Bier app</h1>
       </div>

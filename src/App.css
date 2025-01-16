@@ -55,32 +55,29 @@ body {
   align-items: center;
   min-height: 100vh;
   max-width: 100vw;
-  color: #333;
-  background-image: url('./assets/tlo.jpg'); 
+  color: #000000;
+  background-color: #ffffff;
+  /* background-image: url('./assets/tlo.jpg'); 
   background-size: cover;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;  */
 }
 
 .app-container {
-  max-width: 80vw; 
-  width: 375px;
+  /* max-width: 80vw; 
+  width: 375px; */
   /* max-width: 100%; */
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column; /* Ustawia elementy w kolumnie */
-  justify-content: center; /* Wyśrodkowuje elementy w pionie */
-  align-items: center; 
-  @media (max-width: 768px) { /* Użyj odpowiedniej wartości breakpoint dla urządzeń mobilnych */
+  /* border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+
+  
+  @media (max-width: 576px) { /* Użyj odpowiedniej wartości breakpoint dla urządzeń mobilnych */
     width: 100vw;
-    max-width: 100vw;
-    height: 100vh;
-    margin: 0;
+    max-width: 100%;
+    height: 100%;
+    margin: 0px;
     border-radius: 0; /* Usuń zaokrąglone rogi */
-    padding: 0px;
+    padding: 00px;
   }
 
 }
