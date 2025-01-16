@@ -1,7 +1,7 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { Grid } from "@mui/material";
+import Grid from '@mui/material/Grid';
 
 function Dzienniki() {
   const navigate = useNavigate();
@@ -9,13 +9,14 @@ function Dzienniki() {
 
   return (
     <div className="app-container">
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={6} sm={4} md={3}>
+      <h2>Dzienniki:</h2>
+       <Grid container rowSpacing={1} justifyContent="space-around">
+        <Grid>
           <Link to="/dziennik" onClick={() => navigate("/dziennik")}>
             <div className="tile">Dziennik Warzenia</div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid >
           <Link to="/kalendarz" onClick={() => navigate("/kalendarz")}>
             <div className="tile">Kalendarz</div>
           </Link>

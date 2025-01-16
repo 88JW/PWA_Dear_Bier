@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useState } from "react";
-import { Grid } from "@mui/material";
+import Grid from '@mui/material/Grid';
 
 
 
@@ -39,7 +39,7 @@ import Ideas from "./Ideas";
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.8.0");
+  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.8.1");
 
   return (
     <div className="app-container">
@@ -47,8 +47,11 @@ function Home() {
         <h1>Dear Bier app</h1>
       </div>
 
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6} sm={4} md={3}>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="space-around">
+      
+
+
+      <Grid> 
           <Link to="/dzienniki" onClick={() => navigate("/dzienniki")}>
             <div className="tile">
               <AssignmentIcon /> 
@@ -56,7 +59,7 @@ function Home() {
             </div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid>
           <Link to="/ocenPiwo" onClick={() => navigate("/ocenPiwo")}>
             <div className="tile">
               <StarRateIcon /> 
@@ -64,7 +67,7 @@ function Home() {
             </div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid >
           <Link to="/kalkulatory" onClick={() => navigate("/kalkulatory")}>
             <div className="tile">
               <CalculateIcon />
@@ -72,7 +75,7 @@ function Home() {
             </div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid >
           <Link to="/receptury" onClick={() => navigate("/receptury")}>
             <div className="tile">
               <MenuBookIcon />

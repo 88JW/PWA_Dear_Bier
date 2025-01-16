@@ -1,7 +1,7 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { Grid } from "@mui/material";
+import Grid from '@mui/material/Grid';
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 
@@ -11,8 +11,9 @@ function Kalkulatory() {
 
   return (
     <div className="app-container">
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={6} sm={4} md={3}>
+      <h2>Kalkulatory:</h2>
+      <Grid container rowSpacing={1} justifyContent="space-around">
+        <Grid >
           <Link to="/kalkulator" onClick={() => navigate("/kalkulator")}>
             <div className="tile">
               <WaterDropIcon />
@@ -20,7 +21,7 @@ function Kalkulatory() {
             </div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid >
           <Link to="/temperatury" onClick={() => navigate("/temperatury")}>
             <div className="tile">
               <ThermostatIcon />
@@ -28,12 +29,12 @@ function Kalkulatory() {
             </div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid >
           <Link to="/ibuClculator" onClick={() => navigate("/ibuClculator")}>
             <div className="tile">IBU</div>
           </Link>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid >
           <Link to="/blgClculator" onClick={() => navigate("/blgClculator")}>
             <div className="tile">BLG</div>
           </Link>
