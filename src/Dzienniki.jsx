@@ -28,6 +28,13 @@ function Dzienniki() {
             </div>
           </Link>
         </Grid>
+        <Grid >
+          <Link to="/AsystentWarzenia" onClick={() => navigate("/AsystentWarzenia")}>
+            <div className="tile">
+              <CalendarTodayIcon /> Asysten Warzenia
+            </div>
+          </Link>
+        </Grid>
       </Grid>
 
       <p></p>
