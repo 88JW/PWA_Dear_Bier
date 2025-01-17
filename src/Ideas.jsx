@@ -27,7 +27,7 @@ function Ideas() {
             <ul>
               
               <li>
-              Dodanie całego segmentu dla oceny piwa, lokali, ze zdjęciami oceną i opisem.
+              <del>Dodanie całego segmentu dla oceny piwa, lokali, ze zdjęciami oceną i opisem.</del>
               </li>
             </ul>
           </div>
@@ -99,10 +99,10 @@ function Ideas() {
               </li>
               <li>
                 <h3>Konwerter jednostek:</h3>
-                <p>
-                  Konwersja między jednostkami (np. objętość, temperatura,
-                  waga).
-                </p>
+                
+                <del>Konwersja między jednostkami (np. objętość, temperatura,
+                  waga).</del>
+       
               </li>
               <li>
                 <h3>Tryb ciemny:</h3>
@@ -129,8 +129,18 @@ function Ideas() {
                 <p>Dodanie opcji backupu i przywracania danych.</p>
               </li>
             </ul>
+
+            
           </div>
         </div>
+        <div className="ideas-section">
+          <h2>Adres strony</h2>
+          <div className="ideas-subsection">
+            
+            <p>https://superb-raindrop-424083.netlify.app/</p>
+          </div>
+        </div>
+        
       </div>
     </div>
   );
