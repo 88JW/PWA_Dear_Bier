@@ -117,10 +117,10 @@ function AsystentButelkowania() {
   }
 
   return (
+    <div>
+      <h2>Asystent Butelkowania </h2>
     <Box sx={{ p: 2, maxWidth: 600, margin: 'auto' }}>
-      <Typography variant="h4" gutterBottom>
-        Asystent Warzenia
-      </Typography>
+      
       {steps.map((step, index) => (
         <Paper
           key={step.id}
@@ -164,6 +164,7 @@ function AsystentButelkowania() {
         </Button>}       
       </Box>
     </Box>
+    </div>
   );
 }
 

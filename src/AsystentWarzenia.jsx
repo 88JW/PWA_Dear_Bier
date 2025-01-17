@@ -95,11 +95,11 @@ function AsystentWarzenia() {
     // brak akcji po wciśnięciu wstecz, opcja do rozbudowania
   }
 
-  return (
+  return ( 
+  <div>
+    <h2>Asystent Warzenia</h2>
     <Box sx={{ p: 2, maxWidth: 600, margin: 'auto' }}>
-      <Typography variant="h4" gutterBottom>
-        Asystent Warzenia
-      </Typography>
+      
       {steps.map((step, index) => (
         <Paper
           key={step.id}
@@ -143,6 +143,7 @@ function AsystentWarzenia() {
         </Button>}       
       </Box>
     </Box>
+    </div>
   );
 }
 
