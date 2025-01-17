@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate,useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Dexie from 'dexie';
 import {Card,CardContent, CardMedia,Typography,Rating,Button,IconButton,Menu,MenuItem,} from '@mui/material';
-import {SettingsIcon,ArrowBackIcon} from '@mui/icons-material/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EdytujWpis from './EdytujWpis';
-
-
+import { useSearchParams } from 'react-router-dom';
 function SzczegolyWpisu() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -156,6 +156,7 @@ function SzczegolyWpisu() {
           <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
             Wstecz
           </Button>
+  
         </div>
       )}
     </div>
