@@ -43,7 +43,7 @@ import Ideas from "./Ideas";
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.8.2");
+  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.9.0");
 
   return (
     <div>
