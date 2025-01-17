@@ -37,6 +37,7 @@ import NowyWpis from "./NowyWpis";
 import SzczegolyWpisu from "./SzczegolyWpisu";
 
 import AsystentWarzenia from "./AsystentWarzenia";
+import AsystentButelkowania from "./AsystentButelkowania";
 
 import Ideas from "./Ideas";
 
@@ -124,8 +125,8 @@ function App() {
         <Route path="/wpis/:id" element={<SzczegolyWpisu />} />
         <Route path="/SzczegolyWpisu/:id" element={<SzczegolyWpisu />} /> 
         <Route path="/AsystentWarzenia/" element={<AsystentWarzenia />} /> 
-
-        AsystentWarzenia
+        <Route path="/AsystentButelkowania/" element={<AsystentButelkowania />} /> 
+      
  
         <Route path="/ideas" element={<Ideas />} />
       </Routes>

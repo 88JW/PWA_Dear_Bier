@@ -6,51 +6,72 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-function AsystentWarzenia() {
+function AsystentButelkowania() {
   const navigate = useNavigate();
   const [steps, setSteps] = useState([
     {
       id: 1,
       title: 'Przygotowanie sprzętu',
-      description: 'Upewnij się, że masz: garnek, fermentor, rurkę fermentacyjną, miarkę, termometr, środek do dezynfekcji.',
+      description: 'Przygotuj: czyste butelki, kapsle, kapslownicę, rurkę do przelewania, miarkę do cukru, garnek, środek do dezynfekcji. Upewnij się, że wszystko jest w zasięgu ręki.',
       isCompleted: false,
       isOpen: true,
     },
     {
       id: 2,
-      title: 'Dezynfekcja',
-      description: 'Wszystkie elementy, które będą miały kontakt z piwem, muszą być zdezynfekowane. Zanurz sprzęt w roztworze dezynfekującym i pozostaw na czas określony przez producenta.',
+      title: 'Dezynfekcja sprzętu',
+      description: 'Wszystkie elementy mające kontakt z piwem (butelki, kapsle, rurka, kapslownica) zdezynfekuj. Zanurz je w roztworze dezynfekującym i postępuj zgodnie z instrukcją producenta.',
       isCompleted: false,
       isOpen: false,
     },
     {
       id: 3,
-      title: 'Przygotowanie brzeczki',
-      description: 'Wlej wodę do garnka, dodaj odpowiednią ilość ekstraktu słodowego (według przepisu). Gotuj przez 60 minut, dodając chmiel w odpowiednich momentach.',
+      title: 'Przygotowanie roztworu cukru',
+      description: 'W garnku zagotuj ok. 0,5 litra wody i rozpuść w niej cukier (zwykle 5-8 g/l piwa). Dokładna ilość zależy od przepisu i stylu piwa. Mieszaj, aż cukier całkowicie się rozpuści.',
       isCompleted: false,
       isOpen: false,
     },
     {
       id: 4,
-      title: 'Schładzanie brzeczki',
-      description: 'Po gotowaniu, jak najszybciej schłodź brzeczkę do temperatury odpowiedniej dla drożdży (ok. 20-22°C).',
+      title: 'Przelewanie piwa do butelek',
+      description: 'Przelej piwo z fermentora do czystego, zdezynfekowanego naczynia (np. drugiego fermentora), dodając wcześniej przygotowany roztwór cukru. Delikatnie wymieszaj. Użyj zdezynfekowanej rurki, by przelać piwo do butelek. Pozostaw 2-3 cm wolnej przestrzeni od góry.',
       isCompleted: false,
       isOpen: false,
     },
     {
       id: 5,
-      title: 'Zadawanie drożdży',
-      description: 'Przelej schłodzoną brzeczkę do fermentora. Dodaj drożdże piwowarskie i dokładnie wymieszaj.',
+      title: 'Kapslowanie butelek',
+      description: 'Nałóż na każdą butelkę zdezynfekowany kapsel. Użyj kapslownicy, aby szczelnie zamknąć butelki. Sprawdź, czy kapsle są dobrze zaciśnięte.',
       isCompleted: false,
       isOpen: false,
     },
-      {
-        id: 6,
-        title: 'Fermentacja',
-        description: 'Zamknij fermentor i umieść rurkę fermentacyjną. Pozostaw fermentor w ciemnym miejscu w temperaturze pokojowej na ok. 1-2 tygodnie.',
-        isCompleted: false,
-        isOpen: false,
-      },
+    {
+      id: 6,
+      title: 'Mycie i dezynfekcja',
+      description: 'Po butelkowaniu umyj i zdezynfekuj cały sprzęt, który miał kontakt z piwem, aby był gotowy do następnego użycia.',
+      isCompleted: false,
+      isOpen: false,
+    },
+    {
+      id: 7,
+      title: 'Refermentacja w butelkach',
+      description: 'Przenieś zakapslowane butelki w ciepłe miejsce (20-25°C) na 1-2 tygodnie. W tym czasie drożdże przerobią dodany cukier na dwutlenek węgla, nasycając piwo.',
+      isCompleted: false,
+      isOpen: false,
+    },
+    {
+      id: 8,
+      title: 'Leżakowanie',
+      description: 'Po refermentacji przenieś butelki w chłodne i ciemne miejsce (10-15°C) na minimum 2-4 tygodnie. Dłuższe leżakowanie pozytywnie wpływa na klarowność i smak piwa.',
+      isCompleted: false,
+      isOpen: false,
+    },
+    {
+      id: 9,
+      title: 'Degustacja',
+      description: 'Schłodź piwo w lodówce na kilka godzin. Otwórz butelkę i przelej piwo do szkła, ostrożnie, by ewentualny osad drożdży nie znalazł się w szklance. Ciesz się swoim piwem!',
+      isCompleted: false,
+      isOpen: false,
+    },
   ]);
 
   const handleCompleteStep = (stepId) => {
@@ -146,4 +167,4 @@ function AsystentWarzenia() {
   );
 }
 
-export default AsystentWarzenia;
+export default AsystentButelkowania;

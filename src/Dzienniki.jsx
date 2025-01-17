@@ -4,7 +4,10 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Grid from '@mui/material/Grid';
 import AssignmentIcon from '@mui/icons-material/Assignment'; 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
- 
+
+import Brewery from './assets/brewery.png';
+import Butelkowanie from './assets/butelkowanie.png';
+
 
 function Dzienniki() {
   const navigate = useNavigate();
@@ -29,11 +32,18 @@ function Dzienniki() {
           </Link>
         </Grid>
         <Grid >
-          <Link to="/AsystentWarzenia" onClick={() => navigate("/AsystentWarzenia")}>
-            <div className="tile">
-              <CalendarTodayIcon /> Asysten Warzenia
-            </div>
+        <Link to="/AsystentWarzenia" onClick={() => navigate("/AsystentWarzenia")}>
+          <div className="tile">
+              <img src={Brewery} alt="Hop Icon" style={{ width: '40%', height: '40%' }}/>Asysten Warzenia</div>
           </Link>
+         
+        </Grid>
+        <Grid >
+        <Link to="/AsystentButelkowania" onClick={() => navigate("/AsystentButelkowania")}>
+          <div className="tile">
+              <img src={Butelkowanie} alt="Hop Icon" style={{ width: '40%', height: '40%' }}/>Asysten Butelkowanie</div>
+          </Link>
+          
         </Grid>
       </Grid>
 
