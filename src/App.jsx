@@ -36,10 +36,12 @@ import OcenPiwo from "./OcenPiwo";
 import NowyWpis from "./NowyWpis";
 import SzczegolyWpisu from "./SzczegolyWpisu";
 
+
 import AsystentWarzenia from "./AsystentWarzenia";
 import AsystentButelkowania from "./AsystentButelkowania";
 
 import Ideas from "./Ideas";
+import Polityka from "./Polityka";
 
 function Home() {
   const navigate = useNavigate();
@@ -94,6 +96,9 @@ function Home() {
         <Link to="/ideas" onClick={() => navigate("/ideas")}>
           <p>Pomysły</p>
         </Link>
+        <Link to="/polityka" onClick={() => navigate("/polityka")}>
+          <p>Polityka prywatności</p>
+        </Link>
       </div>
     </div>
   );
@@ -127,7 +132,7 @@ function App() {
         <Route path="/AsystentWarzenia/" element={<AsystentWarzenia />} /> 
         <Route path="/AsystentButelkowania/" element={<AsystentButelkowania />} /> 
       
- 
+        <Route path="/polityka" element={<Polityka />} />
         <Route path="/ideas" element={<Ideas />} />
       </Routes>
     </BrowserRouter>
