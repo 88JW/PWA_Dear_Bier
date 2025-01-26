@@ -129,11 +129,13 @@ function SzczegolyWpisu() {
   const handleShare = async () => {
     if (navigator.canShare && fileToShare && wpis) {
       const textToShare = `
-        Nazwa: ${wpis.nazwa}
-        Browar: ${wpis.browar}
+      Piwo: ${wpis.nazwa}
+      Browar: ${wpis.browar}
+      Ocena: ${wpis.ocena}/5
+      
+      Szczegóły:
         Styl: ${wpis.styl}
         Data degustacji: ${wpis.dataDegustacji}
-        Ogólna ocena: ${wpis.ocena}/5
         Jakość aromatu: ${wpis.jakoscAromatu}/5
         Nuty aromatyczne: ${wpis.nutyAromatyczne.map(nuta => nuta.label).join(', ')}
         Barwa: ${wpis.barwa}
