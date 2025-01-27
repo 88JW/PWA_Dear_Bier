@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Typography, Rating, List, ListItem, ListItemText, Box } from '@mui/material'; // Importujemy Box
@@ -9,7 +8,7 @@ db.version(1).stores({
   wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
 });
 
-function Wpisy({ displayMode }) {
+function Wpisy({ displayMode, sortMode }) {
   const [wpisy, setWpisy] = useState([]);
 
   useEffect(() => {
@@ -32,6 +31,23 @@ function Wpisy({ displayMode }) {
           return updatedWpis;
         }));
 
+        // Sortowanie
+        updatedWpisy.sort((a, b) => {
+          const [field, order] = sortMode.split('-');
+          if (field === 'ocena' || field === 'dataDegustacji') {
+            if (order === 'asc') {
+              return a[field] - b[field]; // Rosnąco
+            } else {
+              return b[field] - a[field]; // Malejąco
+            }
+          } else if (field === 'styl') {
+            return order === 'asc'
+              ? a.styl.localeCompare(b.styl) // Rosnąco
+              : b.styl.localeCompare(a.styl) // Malejąco
+          }
+          return 0;
+        });
+
         setWpisy(updatedWpisy);
       } catch (error) {
         console.error('Błąd podczas pobierania wpisów:', error);
@@ -43,7 +59,7 @@ function Wpisy({ displayMode }) {
     db.wpisy.hook('updating', fetchWpisy);
 
     fetchWpisy();
-  }, []);
+  }, [sortMode]);
 
   const handleDelete = async (id) => {
     try {
@@ -60,24 +76,23 @@ function Wpisy({ displayMode }) {
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {wpisy.map((wpis) => (
             <Link key={wpis.id} to={`/wpis/${wpis.id}`} style={{ textDecoration: 'none' }}>
-              <Card sx={{ 
-      width: 180, // Stała szerokość karty
-      height: 310, // Stała wysokość karty
-      marginBottom: 1, 
-      marginRight:1, 
-      marginTop: 1,
-      display: 'flex',
-      flexDirection: 'column',
-       }}>
+              <Card sx={{
+                width: 180, // Stała szerokość karty
+                height: 310, // Stała wysokość karty
+                marginBottom: 1,
+                marginRight: 1, marginTop: 1,
+                display: 'flex',
+                flexDirection: 'column',
+              }}>
                 {wpis.miniaturaUrl && (
                   <CardMedia
-                  sx={{ 
-                    width: '100%', // Szerokość obrazka równa szerokości kontenera
-                    paddingTop: '100%', // Wysokość obrazka jest równa szerokości (tworzy kwadrat)
-                    position: 'relative',
-                     }}
-                  image={wpis.miniatura}
-                  alt={wpis.nazwa}
+                    sx={{
+                      width: '100%', // Szerokość obrazka równa szerokości kontenera
+                      paddingTop: '100%', // Wysokość obrazka jest równa szerokości (tworzy kwadrat)
+                      position: 'relative',
+                    }}
+                    image={wpis.miniatura}
+                    alt={wpis.nazwa}
                   />
                 )}
                 <CardContent>
@@ -98,7 +113,7 @@ function Wpisy({ displayMode }) {
           {wpisy.map((wpis) => (
             <Link key={wpis.id} to={`/wpis/${wpis.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <ListItem button>
-               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                   <Box sx={{ flexGrow: 1 }}>
                     <ListItemText primary={wpis.nazwa} secondary={`${wpis.dataDegustacji}, ${wpis.styl}`} />
                   </Box>
