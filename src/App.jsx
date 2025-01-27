@@ -45,7 +45,7 @@ import Polityka from "./Polityka";
 
 function Home() {
   const navigate = useNavigate();
-  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.9.0");
+  const [wersjaAplikacji, setWersjaAplikacji] = useState("v1.9.2");
 
   return (
     <div>
