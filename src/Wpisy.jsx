@@ -60,11 +60,22 @@ function Wpisy({ displayMode }) {
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {wpisy.map((wpis) => (
             <Link key={wpis.id} to={`/wpis/${wpis.id}`} style={{ textDecoration: 'none' }}>
-              <Card sx={{ maxWidth: 345, marginBottom: 1, marginRight:1, marginTop: 1}}>
+              <Card sx={{ 
+      width: 180, // Stała szerokość karty
+      height: 310, // Stała wysokość karty
+      marginBottom: 1, 
+      marginRight:1, 
+      marginTop: 1,
+      display: 'flex',
+      flexDirection: 'column',
+       }}>
                 {wpis.miniaturaUrl && (
                   <CardMedia
-                  component="img"
-                  height="200"
+                  sx={{ 
+                    width: '100%', // Szerokość obrazka równa szerokości kontenera
+                    paddingTop: '100%', // Wysokość obrazka jest równa szerokości (tworzy kwadrat)
+                    position: 'relative',
+                     }}
                   image={wpis.miniatura}
                   alt={wpis.nazwa}
                   />
