@@ -367,3 +367,14 @@ function SzczegolyWpisu() {
 }
 
 export default SzczegolyWpisu;
+
+
+
+{/* <Card sx={{ maxWidth: 345, marginBottom: 1, marginRight:1, marginTop: 1}}>
+                {wpis.miniaturaUrl && (
+                  <CardMedia
+                  component="img"
+                  height="200"
+                  image={wpis.miniatura}
+                  alt={wpis.nazwa}
+                  /> */}

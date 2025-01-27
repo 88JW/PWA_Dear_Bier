@@ -1,45 +1,43 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardMedia, Typography, IconButton, Rating } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Card, CardContent, CardMedia, Typography, Rating, List, ListItem, ListItemText, Box } from '@mui/material'; // Importujemy Box
 import Dexie from 'dexie';
-// import { db } from './NowyWpis';
 
-// Utwórz instancję Dexie i zdefiniuj schemat bazy danych (jeśli nie jest zdefiniowany w innym miejscu)
 const db = new Dexie('OcenyPiwaDB');
 db.version(1).stores({
   wpisy: '++id, nazwa, browar, styl, dataDegustacji, intensywnoscAromatu, jakoscAromatu, nutyAromatyczne, barwa, klarownosc, piana, intensywnoscSmaku, rownowaga, goryczka, slodycz, kwasowosc, nutySmakowe, pijalnosc, zlozonosc, ogolneWrazenie, uwagi, miniatura, ocena',
 });
 
-function Wpisy() {
+function Wpisy({ displayMode }) {
   const [wpisy, setWpisy] = useState([]);
-  const [wpis, setWpis] = useState(null);
+
   useEffect(() => {
     const fetchWpisy = async () => {
       try {
         const data = await db.wpisy.toArray();
-        const wpisyZMiniaturami = await Promise.all(data.map(async (wpis) => {
+        const updatedWpisy = await Promise.all(data.map(async (wpis) => {
+          const updatedWpis = { ...wpis };
           if (wpis.miniatura) {
             const reader = new FileReader();
-            reader.readAsDataURL(new Blob([wpis.miniatura])); // Użyj readAsDataURL
+            reader.readAsDataURL(new Blob([wpis.miniatura]));
 
             await new Promise((resolve) => {
               reader.onload = () => {
-                wpis.miniaturaUrl = reader.result;
+                updatedWpis.miniaturaUrl = reader.result;
                 resolve();
               };
             });
           }
-          return wpis;
+          return updatedWpis;
         }));
 
-        setWpisy(wpisyZMiniaturami); 
+        setWpisy(updatedWpisy);
       } catch (error) {
         console.error('Błąd podczas pobierania wpisów:', error);
       }
     };
 
-    // Nasłuchiwanie zmian w IndexedDB
     db.wpisy.hook('creating', fetchWpisy);
     db.wpisy.hook('deleting', fetchWpisy);
     db.wpisy.hook('updating', fetchWpisy);
@@ -58,33 +56,50 @@ function Wpisy() {
 
   return (
     <div>
-     {wpisy.map((wpis) => (
-        <Link key={wpis.id} to={`/wpis/${wpis.id}`}> 
-          <Card sx={{ maxWidth: 345, marginBottom: 2 }}>
-            {wpis.miniaturaUrl && ( 
-              <CardMedia
-              component="img"
-              height="200"
-              image={wpis.miniatura}
-              alt={wpis.nazwa}
-              />
+      {displayMode === 'card' ? (
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {wpisy.map((wpis) => (
+            <Link key={wpis.id} to={`/wpis/${wpis.id}`} style={{ textDecoration: 'none' }}>
+              <Card sx={{ maxWidth: 345, marginBottom: 1, marginRight:1, marginTop: 1}}>
+                {wpis.miniaturaUrl && (
+                  <CardMedia
+                  component="img"
+                  height="200"
+                  image={wpis.miniatura}
+                  alt={wpis.nazwa}
+                  />
+                )}
+                <CardContent>
+                  <Typography gutterBottom variant="h7" component="div">
+                    {wpis.nazwa}
+                  </Typography>
+                  <Typography gutterBottom variant="h7" component="div">
+                    {wpis.dataDegustacji}
+                  </Typography>
+                  <Rating value={wpis.ocena} readOnly />
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <List>
+          {wpisy.map((wpis) => (
+            <Link key={wpis.id} to={`/wpis/${wpis.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItem button>
+               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+                  <Box sx={{ flexGrow: 1 }}>
+                    <ListItemText primary={wpis.nazwa} secondary={`${wpis.dataDegustacji}, ${wpis.styl}`} />
+                  </Box>
+                  <Box>
+                    <Rating value={wpis.ocena} readOnly />
+                  </Box>
+                </Box>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
       )}
-      <CardContent>
-        <Typography gutterBottom variant="h7" component="div">
-          {wpis.nazwa}
-        </Typography>
-        <Typography gutterBottom variant="h7" component="div">
-          {wpis.dataDegustacji}
-        </Typography>
-        <Rating value={wpis.ocena} readOnly />
-
-        {/* <IconButton aria-label="delete" onClick={() => handleDelete(wpis.id)}>
-          <DeleteIcon />
-        </IconButton> */}
-      </CardContent>
-    </Card>
-  </Link>
-))}
     </div>
   );
 }
